@@ -18,3 +18,5 @@ Below’s a screenshot with an example of the finished report. You’ll need to 
 
 # References
 https://www.youtube.com/watch?v=YyD1MRJY0qI
+https://www.connectionstrings.com/sql-server-2019/
+https://learn.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-7.0
