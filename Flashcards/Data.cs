@@ -9,7 +9,7 @@ namespace Flashcards
         private static readonly string connectionString = "" +
             "Data Source=localhost;" +
             "Integrated Security = True; Connect Timeout = 30;" +
-            " Encrypt=False;" +
+            "Encrypt=False;" +
             "Trust Server Certificate=False;" +
             "Application Intent = ReadWrite; " +
             "Multi Subnet Failover=False";
@@ -34,6 +34,7 @@ namespace Flashcards
                     else if(!databaseExists)
                     {
                         // Create the database
+                        
 
                         string createDatabaseQuery = $"CREATE DATABASE {databaseName} ON PRIMARY " +
                                                     $"(NAME = {databaseName}_Data, " +
@@ -47,10 +48,12 @@ namespace Flashcards
 
                         using (SqlCommand command = new SqlCommand(createDatabaseQuery, connection))
                         {
-                            connection.Open();
-                            command.ExecuteNonQuery();
-                            Console.WriteLine("Database is created successfully.");
+                            //connection.Open();
+                            //command.ExecuteNonQuery();
+                            Console.WriteLine(createDatabaseQuery);
                             Console.ReadLine();
+                            //Console.WriteLine("Database is created successfully.");
+                            //Console.ReadLine();
                         }
                     }
                 }
@@ -58,7 +61,7 @@ namespace Flashcards
             catch (Exception ex)
             {
                 Console.WriteLine("Error creating or checking database: " + ex.Message);
-                Console.ReadLine();
+                
             }
         }
 
