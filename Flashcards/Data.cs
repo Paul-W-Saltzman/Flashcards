@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Diagnostics.Metrics;
 using Microsoft.Data.SqlClient;
+using System.Configuration;
+using System.Globalization;
+using Microsoft.IdentityModel.Protocols;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Flashcards
 {
     internal class Data
     {
+        //Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False
         private static readonly string connectionString = "" +
-            "Data Source=localhost;" +
+            "Data Source = (localdb)\\MSSQLLocalDB;" +
+            "Initial Catalog=master;" +
             "Integrated Security = True; Connect Timeout = 30;" +
             "Encrypt=False;" +
             "Trust Server Certificate=False;" +
@@ -18,6 +24,7 @@ namespace Flashcards
         {
 
             string databaseName = "FlashCards";
+            string projectPath = Directory.GetCurrentDirectory();
 
             try
             {
@@ -38,10 +45,10 @@ namespace Flashcards
 
                         string createDatabaseQuery = $"CREATE DATABASE {databaseName} ON PRIMARY " +
                                                     $"(NAME = {databaseName}_Data, " +
-                                                    $"FILENAME = 'C:\\{databaseName}Data.mdf', " +
+                                                    $"FILENAME = '{projectPath}\\{databaseName}Data.mdf', " +
                                                     "SIZE = 2MB, MAXSIZE = 10MB, FILEGROWTH = 10%)" +
                                                     $"LOG ON (NAME = {databaseName}_Log, " +
-                                                    $"FILENAME = 'C:\\{databaseName}Log.ldf', " +
+                                                    $"FILENAME = '{projectPath}\\{databaseName}Log.ldf', " +
                                                     "SIZE = 1MB, " +
                                                     "MAXSIZE = 5MB, " +
                                                     "FILEGROWTH = 10%)";
@@ -50,10 +57,13 @@ namespace Flashcards
                         {
                             //connection.Open();
                             //command.ExecuteNonQuery();
-                            Console.WriteLine(createDatabaseQuery);
-                            Console.ReadLine();
+
                             //Console.WriteLine("Database is created successfully.");
                             //Console.ReadLine();
+
+                            //output string
+                            Console.WriteLine(createDatabaseQuery);
+                            Console.ReadLine();
                         }
                     }
                 }
