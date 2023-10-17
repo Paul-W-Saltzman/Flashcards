@@ -40,30 +40,34 @@ namespace Flashcards
                     }
                     else if(!databaseExists)
                     {
-                        // Create the database
-                        
+                        //Create the database
 
-                        string createDatabaseQuery = $"CREATE DATABASE {databaseName} ON PRIMARY " +
-                                                    $"(NAME = {databaseName}_Data, " +
-                                                    $"FILENAME = '{projectPath}\\{databaseName}Data.mdf', " +
-                                                    "SIZE = 2MB, MAXSIZE = 10MB, FILEGROWTH = 10%)" +
-                                                    $"LOG ON (NAME = {databaseName}_Log, " +
-                                                    $"FILENAME = '{projectPath}\\{databaseName}Log.ldf', " +
-                                                    "SIZE = 1MB, " +
-                                                    "MAXSIZE = 5MB, " +
-                                                    "FILEGROWTH = 10%)";
+
+                        connection.Open();
+
+                        string createDatabaseQuery = @$"BEGIN
+                                                    CREATE DATABASE {databaseName} ON PRIMARY
+                                                    (NAME = N'{databaseName}',
+                                                    FILENAME = N'{projectPath}\\{databaseName}Data.mdf',
+                                                    SIZE = 2MB, MAXSIZE = 10MB, FILEGROWTH = 10%)
+                                                    LOG ON (NAME = N'{databaseName}_Log',
+                                                    FILENAME = N'{projectPath}\\{databaseName}Log.ldf',
+                                                    SIZE = 1MB,
+                                                    MAXSIZE = 5MB,
+                                                    FILEGROWTH = 10%)
+                                                    END";
 
                         using (SqlCommand command = new SqlCommand(createDatabaseQuery, connection))
                         {
-                            //connection.Open();
-                            //command.ExecuteNonQuery();
+                            connection.Open();
+                            command.ExecuteNonQuery();
 
-                            //Console.WriteLine("Database is created successfully.");
-                            //Console.ReadLine();
+                            Console.WriteLine("Database is created successfully.");
+                            Console.ReadLine();
 
                             //output string
-                            Console.WriteLine(createDatabaseQuery);
-                            Console.ReadLine();
+                        //    Console.WriteLine(createDatabaseQuery);
+                        //    Console.ReadLine();
                         }
                     }
                 }
