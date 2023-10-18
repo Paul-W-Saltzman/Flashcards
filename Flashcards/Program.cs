@@ -32,7 +32,8 @@ using System.Runtime.InteropServices;
     string color = $"{checkMark}{green}   ";
 
     Console.CursorVisible = false;
-
+while (!exitMenu)
+{
     while (!isSelected)
     {
         Console.SetCursorPosition(left, top);
@@ -43,8 +44,8 @@ using System.Runtime.InteropServices;
 
         key = Console.ReadKey(true);
 
-    //while (!exitMenu)
-    //{
+        //while (!exitMenu)
+        //{
 
         switch (key.Key)
 
@@ -61,23 +62,26 @@ using System.Runtime.InteropServices;
                 isSelected = true;
                 break;
         }
-    //}
+        //}
 
-    //switch (option)
-    //{
-    //    case 1:
-    //        isSelected = true;
-    //        break;
-    //    case 2:
-    //        Console.WriteLine(option);
-    //        break;
-    //    case 3:
-    //        Console.WriteLine(option);
-    //        break;
-    //}
+        //switch (option)
+        //{
+        //    case 1:
+        //        isSelected = true;
+        //        break;
+        //    case 2:
+        //        Console.WriteLine(option);
+        //        break;
+        //    case 3:
+        //        Console.WriteLine(option);
+        //        break;
+        //}
 
     }
 
 
-Console.WriteLine($@"You Chose: {option}");
+    Console.WriteLine($@"You Chose: {option}  Press enter to continue");
+    isSelected = false;
+    Console.ReadLine();
+}
 
