@@ -25,6 +25,8 @@ namespace Flashcards
             {
                 Console.WriteLine("Error checking database: " + ex.Message);
             }
+
+
             if (databaseExits) 
             {
                 Console.WriteLine("Database Exits.");
