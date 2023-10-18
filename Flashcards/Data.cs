@@ -68,6 +68,38 @@ namespace Flashcards
                 }
             }
         }
+        public static void CreateTables()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+
+                tableCmd.CommandText =
+                    @"USE FlashCards;
+                    IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Stack')
+                    BEGIN
+                    CREATE TABLE dbo.Stack (
+                    ID INT IDENTITY(1,1) PRIMARY KEY,
+                    Name TEXT); 
+                    END";
+                try
+                {
+                    int rowsAffected = tableCmd.ExecuteNonQuery();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception);
+                    Console.ReadLine();
+                }
+                connection.Close();
+
+                connection.Open ();
+
+            }
+        }
+
+        public static void () { }
 
         private static bool CheckIfDatabaseExists(SqlConnection connection, string databaseName)
         {
