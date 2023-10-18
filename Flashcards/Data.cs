@@ -1,51 +1,43 @@
 ﻿using System;
-using System.Diagnostics.Metrics;
+using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
-using System.Configuration;
-using System.Globalization;
-using Microsoft.IdentityModel.Protocols;
-using static System.Net.Mime.MediaTypeNames;
+using System.IO;
 
 namespace Flashcards
 {
     internal class Data
     {
-        //Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False
-        private static readonly string connectionString = "" +
-            "Data Source = (localdb)\\MSSQLLocalDB;" +
-            "Initial Catalog=master;" +
-            "Integrated Security = True; Connect Timeout = 30;" +
-            "Encrypt=False;" +
-            "Trust Server Certificate=False;" +
-            "Application Intent = ReadWrite; " +
-            "Multi Subnet Failover=False";
+        private static readonly string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
         internal static void CheckCreateDatabase()
         {
-
             string databaseName = "FlashCards";
             string projectPath = Directory.GetCurrentDirectory();
-
+            bool databaseExits = false;
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    // Check if the database already exists
-                    bool databaseExists = CheckIfDatabaseExists(connection, databaseName);
-
-                    if (databaseExists)
+                    bool databaseExists = CheckIfDatabaseExists(connection, databaseName); 
+                }  
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error checking database: " + ex.Message);
+            }
+            if (databaseExits) 
+            {
+                Console.WriteLine("Database Exits.");
+            }
+            if (!databaseExits)
+            {
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        Console.WriteLine("Database already exists.");
-                        Console.ReadLine();
-                    }
-                    else if(!databaseExists)
-                    {
-                        //Create the database
-
-
                         connection.Open();
-
-                        string createDatabaseQuery = @$"BEGIN
+                        var command = connection.CreateCommand();
+                        command.CommandText = @$"BEGIN
                                                     CREATE DATABASE {databaseName} ON PRIMARY
                                                     (NAME = N'{databaseName}',
                                                     FILENAME = N'{projectPath}\\{databaseName}Data.mdf',
@@ -56,31 +48,23 @@ namespace Flashcards
                                                     MAXSIZE = 5MB,
                                                     FILEGROWTH = 10%)
                                                     END";
+                        command.ExecuteNonQuery();
 
-                        using (SqlCommand command = new SqlCommand(createDatabaseQuery, connection))
-                        {
-                            connection.Open();
-                            command.ExecuteNonQuery();
+                        connection.Close();
 
-                            Console.WriteLine("Database is created successfully.");
-                            Console.ReadLine();
 
-                            //output string
-                        //    Console.WriteLine(createDatabaseQuery);
-                        //    Console.ReadLine();
-                        }
+                        Console.WriteLine("Database created successfully.");
+
+
                     }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error creating database: " + ex.Message);
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error creating or checking database: " + ex.Message);
-                
-            }
         }
-
-
-
 
         private static bool CheckIfDatabaseExists(SqlConnection connection, string databaseName)
         {
@@ -95,4 +79,3 @@ namespace Flashcards
         }
     }
 }
-
