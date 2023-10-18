@@ -3,17 +3,7 @@ using System.Runtime.InteropServices;
 
 
 
-    [DllImport("kernel32.dll", SetLastError = true)]
-    static extern IntPtr GetStdHandle(int nStdHandle);
-
-    [DllImport("kernel32.dll", SetLastError = true)]
-    static extern int SetConsoleOutputCP(uint wCodePageID);
-
-    // Set the console font to Lucida Console (or any font that supports Unicode)
-    Console.OutputEncoding = System.Text.Encoding.UTF8;
-    // Set the console output code page to UTF-8
-    SetConsoleOutputCP(65001);
-
+    Helpers.setEnvironmentVariables();
     Data.CheckCreateDatabase();
 
     Console.WriteLine("Welcome to Flash Cards your study program.");
@@ -37,6 +27,7 @@ using System.Runtime.InteropServices;
     ConsoleKeyInfo key;
     int option = 1;
     bool isSelected = false;
+    bool exitMenu = false;
     (int left, int top) = Console.GetCursorPosition();
     string color = $"{checkMark}{green}   ";
 
@@ -45,12 +36,15 @@ using System.Runtime.InteropServices;
     while (!isSelected)
     {
         Console.SetCursorPosition(left, top);
-
-        Console.WriteLine($@"{(option == 1 ? color : "    ")}Option 1{resetColor}");
+        Console.Clear();
+        Console.WriteLine($@"{(option == 1 ? color : "    ")}EXIT    {resetColor}");
         Console.WriteLine($@"{(option == 2 ? color : "    ")}Option 2{resetColor}");
         Console.WriteLine($@"{(option == 3 ? color : "    ")}Option 3{resetColor}");
 
         key = Console.ReadKey(true);
+
+    //while (!exitMenu)
+    //{
 
         switch (key.Key)
 
@@ -67,8 +61,23 @@ using System.Runtime.InteropServices;
                 isSelected = true;
                 break;
         }
+    //}
+
+    //switch (option)
+    //{
+    //    case 1:
+    //        isSelected = true;
+    //        break;
+    //    case 2:
+    //        Console.WriteLine(option);
+    //        break;
+    //    case 3:
+    //        Console.WriteLine(option);
+    //        break;
+    //}
 
     }
 
-    Console.WriteLine($@"You selected option {option}");
+
+Console.WriteLine($@"You Chose: {option}");
 

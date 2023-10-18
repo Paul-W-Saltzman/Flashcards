@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 using System.IO;
+using System.Data;
 
 namespace Flashcards
 {
@@ -13,12 +14,12 @@ namespace Flashcards
         {
             string databaseName = "FlashCards";
             string projectPath = Directory.GetCurrentDirectory();
-            bool databaseExits = false;
+            bool databaseExists = false;
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    bool databaseExists = CheckIfDatabaseExists(connection, databaseName); 
+                    databaseExists = CheckIfDatabaseExists(connection, databaseName); 
                 }  
             }
             catch (Exception ex)
@@ -27,11 +28,11 @@ namespace Flashcards
             }
 
 
-            if (databaseExits) 
+            if (databaseExists) 
             {
                 Console.WriteLine("Database Exits.");
             }
-            if (!databaseExits)
+            else if (!databaseExists)
             {
                 try
                 {
@@ -70,14 +71,31 @@ namespace Flashcards
 
         private static bool CheckIfDatabaseExists(SqlConnection connection, string databaseName)
         {
-            string query = $"SELECT COUNT(*) FROM master.dbo.sysdatabases WHERE name = '{databaseName}'";
+            bool databaseExists = false;
+            string query = "SELECT COUNT(*) FROM master.dbo.sysdatabases WHERE name = @DatabaseName";
 
-            using (SqlCommand command = new SqlCommand(query, connection))
+            try
             {
-                connection.Open();
-                int databaseCount = Convert.ToInt32(command.ExecuteScalar());
-                return databaseCount > 0;
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@DatabaseName", databaseName);
+                    connection.Open();
+                    int databaseCount = Convert.ToInt32(command.ExecuteScalar());
+                    databaseExists = (databaseCount > 0);
+                }
             }
+            catch (Exception ex)
+            {
+                // Handle exceptions (e.g., log the error)
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+
+            return databaseExists;
         }
     }
 }
