@@ -40,7 +40,7 @@ namespace Flashcards
             {
                 while (!isSelected)
                 {
-                    //Console.Clear();
+                    Console.Clear();
                     Console.WriteLine("Welcome to Flash Cards your study program.");
                     Console.SetCursorPosition(left, top);
                     
@@ -90,7 +90,7 @@ namespace Flashcards
                 }
 
             }
-
+            Console.Clear();
             Console.WriteLine($@"Goodbye");
             Console.ReadLine();
 
