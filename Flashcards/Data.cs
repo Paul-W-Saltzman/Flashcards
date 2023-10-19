@@ -70,6 +70,11 @@ namespace Flashcards
         }
         public static void CreateTables()
         {
+            CreatStackTable();          
+        }
+
+        private static void CreatStackTable() 
+        {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -93,13 +98,9 @@ namespace Flashcards
                     Console.ReadLine();
                 }
                 connection.Close();
-
-                connection.Open ();
-
             }
-        }
 
-        public static void () { }
+        }
 
         private static bool CheckIfDatabaseExists(SqlConnection connection, string databaseName)
         {
