@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 using System.IO;
 using System.Data;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Flashcards
 {
@@ -167,7 +168,7 @@ namespace Flashcards
                     BEGIN
                     CREATE TABLE dbo.Stacks (
                     StackID INT IDENTITY(1,1) PRIMARY KEY,
-                    Name TEXT); 
+                    StackName TEXT); 
                     END";
                 try
                 {
@@ -211,6 +212,53 @@ namespace Flashcards
             }
 
             return databaseExists;
+        }
+
+        //working through this one I think there must be a better way to do this.
+        internal static int LoadStack(string stackName)
+        {
+            int stackID = -1;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+
+                tableCmd.CommandText =
+                    $@"USE FlashCards;
+                    INSERT INTO Stacks (StackName) VALUES('{stackName}');";
+                try
+                {
+                    int rowsAffected = tableCmd.ExecuteNonQuery();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("LoadStack1");
+                    Console.WriteLine(exception);
+                    Console.ReadLine();
+                }
+                tableCmd.CommandText = 
+                    $@"Select last_insert_rowid();";
+                try
+                {
+                    stackID = Convert.ToInt32(tableCmd.ExecuteScalar());
+
+                    if (stackID > 0)
+                    {
+                        //session.Id = insertedId;
+                    }
+                    else
+                    {
+                        // The insert did not affect any rows (may indicate an issue).
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("LoadStack2");
+                    Console.WriteLine(exception);
+                }
+                connection.Close();
+            }
+            return stackID;
         }
     }
 }

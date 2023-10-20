@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +10,7 @@ namespace Flashcards
 {
     internal class Menu
     {
-        
+
 
         internal static void MainMenu()
         {
@@ -26,7 +28,7 @@ namespace Flashcards
             string White = "\u001b[37m";
             string resetColor = "\u001b[0m";
 
-            Console.WriteLine($@"Use {upArrow} and {downArrow} to navigate and press {green}Enter{resetColor} to select.");
+            
 
             ConsoleKeyInfo key;
             int option = 1;
@@ -40,10 +42,8 @@ namespace Flashcards
             {
                 while (!isSelected)
                 {
-                    Console.Clear();
-                    Console.WriteLine("Welcome to Flash Cards your study program.");
-                    Console.SetCursorPosition(left, top);
-                    
+                    OpenMenu();
+
                     Console.WriteLine($@"{(option == 1 ? color : "    ")}EXIT    {resetColor}");
                     Console.WriteLine($@"{(option == 2 ? color : "    ")}Manage Stacks{resetColor}");
                     Console.WriteLine($@"{(option == 3 ? color : "    ")}Manage FlashCards{resetColor}");
@@ -79,14 +79,25 @@ namespace Flashcards
                         break;
                     case 2:
                         Console.WriteLine(option);
-                        Console.ReadLine();
+                        StackMenu();
                         isSelected = false;
                         break;
                     case 3:
                         Console.WriteLine(option);
+                        FLashCardMenu();
                         isSelected = false;
-                        Console.ReadLine();
                         break;
+                    case 4:
+                        Console.WriteLine(option);
+                        StudyMenu();
+                        isSelected = false;
+                        break;
+                    case 5:
+                        Console.WriteLine(option);
+                        StudySessionMenu();
+                        isSelected = false;
+                        break;
+
                 }
 
             }
@@ -96,7 +107,316 @@ namespace Flashcards
 
         }
 
+        internal static void StackMenu()
+        {
+            Console.Clear();
+            char upArrow = '\u2191';
+            char downArrow = '\u2193';
+            char checkMark = '\u2713';
+
+            string green = "\u001b[32m";
+            string resetColor = "\u001b[0m";
+
+            ConsoleKeyInfo key;
+            int option = 1;
+            bool exitMenu = false;
+            bool isSelected = false;
+            string color = $"{checkMark}{green}   ";
 
 
+            while (!exitMenu)
+            {
+                while (!isSelected)
+                {
+                    OpenMenu();
+
+                    Console.WriteLine($@"{(option == 1 ? color : "    ")}BACK{resetColor}");
+                    Console.WriteLine($@"{(option == 2 ? color : "    ")}View Stacks{resetColor}");
+                    Console.WriteLine($@"{(option == 3 ? color : "    ")}Add Stack{resetColor}");
+                    Console.WriteLine($@"{(option == 4 ? color : "    ")}Delete Stack{resetColor}");
+                   
+                    key = Console.ReadKey(true);
+
+
+
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.DownArrow:
+                            option = (option == 4 ? 1 : option + 1);
+                            break;
+                        case ConsoleKey.UpArrow:
+                            option = (option == 1 ? 4 : option - 1);
+                            break;
+
+                        case ConsoleKey.Enter:
+                            isSelected = true;
+                            break;
+                    }
+                }
+
+                switch (option)
+                {
+                    case 1:
+                        exitMenu = true;
+                        isSelected = true;
+                        break;
+                    case 2:
+                        Console.WriteLine(option);
+                        Console.ReadLine();
+                        isSelected = false;
+                        break;
+                    case 3://Add Stack
+                        Console.WriteLine(option);
+                        isSelected = false;
+                        Console.ReadLine();
+                        break;
+                    case 4:
+                        Console.WriteLine(option);
+                        Console.ReadLine();
+                        isSelected = false;
+                        break;
+
+                }
+            }
+
+
+        }
+        internal static void FLashCardMenu()
+        {
+            Console.Clear();
+            char upArrow = '\u2191';
+            char downArrow = '\u2193';
+            char checkMark = '\u2713';
+
+            string green = "\u001b[32m";
+            string resetColor = "\u001b[0m";
+
+            ConsoleKeyInfo key;
+            int option = 1;
+            bool exitMenu = false;
+            bool isSelected = false;
+            string color = $"{checkMark}{green}   ";
+
+
+            while (!exitMenu)
+            {
+                while (!isSelected)
+                {
+                    OpenMenu();
+
+                    Console.WriteLine($@"{(option == 1 ? color : "    ")}BACK{resetColor}");
+                    Console.WriteLine($@"{(option == 2 ? color : "    ")}View Cards{resetColor}");
+                    Console.WriteLine($@"{(option == 3 ? color : "    ")}Add Cards{resetColor}");
+                    Console.WriteLine($@"{(option == 4 ? color : "    ")}Delete Cards{resetColor}");
+
+                    key = Console.ReadKey(true);
+
+
+
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.DownArrow:
+                            option = (option == 4 ? 1 : option + 1);
+                            break;
+                        case ConsoleKey.UpArrow:
+                            option = (option == 1 ? 4 : option - 1);
+                            break;
+
+                        case ConsoleKey.Enter:
+                            isSelected = true;
+                            break;
+                    }
+                }
+
+                switch (option)
+                {
+                    case 1:
+                        exitMenu = true;
+                        isSelected = true;
+                        break;
+                    case 2:
+                        Console.WriteLine(option);
+                        Console.ReadLine();
+                        isSelected = false;
+                        break;
+                    case 3:
+                        Console.WriteLine(option);
+                        isSelected = false;
+                        Console.ReadLine();
+                        break;
+                    case 4:
+                        Console.WriteLine(option);
+                        Console.ReadLine();
+                        isSelected = false;
+                        break;
+
+                }
+            }
+        }
+
+        internal static void StudyMenu()
+        {
+            Console.Clear();
+            char upArrow = '\u2191';
+            char downArrow = '\u2193';
+            char checkMark = '\u2713';
+
+            string green = "\u001b[32m";
+            string resetColor = "\u001b[0m";
+
+            ConsoleKeyInfo key;
+            int option = 1;
+            bool exitMenu = false;
+            bool isSelected = false;
+            string color = $"{checkMark}{green}   ";
+
+
+            while (!exitMenu)
+            {
+                while (!isSelected)
+                {
+                    OpenMenu();
+
+                    Console.WriteLine($@"{(option == 1 ? color : "    ")}BACK{resetColor}");
+                    Console.WriteLine($@"{(option == 2 ? color : "    ")}stack{resetColor}");
+                    Console.WriteLine($@"{(option == 3 ? color : "    ")}stack{resetColor}");
+                    Console.WriteLine($@"{(option == 4 ? color : "    ")}stack{resetColor}");
+                    /// going to need to figure out this one
+                    key = Console.ReadKey(true);
+
+
+
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.DownArrow:
+                            option = (option == 4 ? 1 : option + 1);
+                            break;
+                        case ConsoleKey.UpArrow:
+                            option = (option == 1 ? 4 : option - 1);
+                            break;
+
+                        case ConsoleKey.Enter:
+                            isSelected = true;
+                            break;
+                    }
+                }
+
+                switch (option)
+                {
+                    case 1:
+                        exitMenu = true;
+                        isSelected = true;
+                        break;
+                    case 2:
+                        Console.WriteLine(option);
+                        Console.ReadLine();
+                        isSelected = false;
+                        break;
+                    case 3:
+                        Console.WriteLine(option);
+                        isSelected = false;
+                        Console.ReadLine();
+                        break;
+                    case 4:
+                        Console.WriteLine(option);
+                        Console.ReadLine();
+                        isSelected = false;
+                        break;
+
+                }
+            }
+        }
+
+        internal static void StudySessionMenu()
+        {
+            Console.Clear();
+            char upArrow = '\u2191';
+            char downArrow = '\u2193';
+            char checkMark = '\u2713';
+
+            string green = "\u001b[32m";
+            string resetColor = "\u001b[0m";
+
+            ConsoleKeyInfo key;
+            int option = 1;
+            bool exitMenu = false;
+            bool isSelected = false;
+            string color = $"{checkMark}{green}   ";
+
+
+            while (!exitMenu)
+            {
+                while (!isSelected)
+                {
+                    OpenMenu();
+
+                    Console.WriteLine($@"{(option == 1 ? color : "    ")}BACK{resetColor}");
+                    Console.WriteLine($@"{(option == 2 ? color : "    ")}stack{resetColor}");
+                    Console.WriteLine($@"{(option == 3 ? color : "    ")}stack{resetColor}");
+                    Console.WriteLine($@"{(option == 4 ? color : "    ")}stack{resetColor}");
+                    /// going to need to figure out this one as well
+                    key = Console.ReadKey(true);
+
+
+
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.DownArrow:
+                            option = (option == 4 ? 1 : option + 1);
+                            break;
+                        case ConsoleKey.UpArrow:
+                            option = (option == 1 ? 4 : option - 1);
+                            break;
+
+                        case ConsoleKey.Enter:
+                            isSelected = true;
+                            break;
+                    }
+                }
+
+                switch (option)
+                {
+                    case 1:
+                        exitMenu = true;
+                        isSelected = true;
+                        break;
+                    case 2:
+                        Console.WriteLine(option);
+                        Console.ReadLine();
+                        isSelected = false;
+                        break;
+                    case 3:
+                        Console.WriteLine(option);
+                        isSelected = false;
+                        Console.ReadLine();
+                        break;
+                    case 4:
+                        Console.WriteLine(option);
+                        Console.ReadLine();
+                        isSelected = false;
+                        break;
+
+                }
+            }
+        }
+
+        internal static void OpenMenu()
+        {
+            Console.Clear();
+            char upArrow = '\u2191';
+            char downArrow = '\u2193';
+            char checkMark = '\u2713';
+
+            string green = "\u001b[32m";
+            string resetColor = "\u001b[0m";
+            (int left, int top) = Console.GetCursorPosition();
+
+            Console.Clear();
+            Console.SetCursorPosition(left, top);
+            Console.WriteLine("Welcome to Flash Cards your study program.");
+            Console.WriteLine($@"Use {green}{upArrow}{resetColor} and {green}{downArrow}{resetColor} to navigate and press {green}Enter{resetColor} to select.");
+            Console.WriteLine();
+
+        }
     }
 }
