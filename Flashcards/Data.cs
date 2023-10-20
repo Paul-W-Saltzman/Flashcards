@@ -92,7 +92,7 @@ namespace Flashcards
                     StudySessionID INT IDENTITY(1,1) PRIMARY KEY, 
                     StackID INT,
                     Date DATE,
-                    StackName TEXT,
+                    StackName VARCHAR(50),
                     Correct INT,
                     Total INT,
                     Score INT
@@ -133,8 +133,8 @@ namespace Flashcards
                     CardID INT IDENTITY(1,1) PRIMARY KEY,
                     StackID INT,
                     NoInStack INT,
-                    Front TEXT,
-                    Back TEXT
+                    Front VARCHAR(50),
+                    Back VARCHAR(50)
                     CONSTRAINT fk_card_stack_id
                         FOREIGN KEY (StackID)
                         REFERENCES Stacks (StackID)
@@ -168,7 +168,7 @@ namespace Flashcards
                     BEGIN
                     CREATE TABLE dbo.Stacks (
                     StackID INT IDENTITY(1,1) PRIMARY KEY,
-                    StackName TEXT); 
+                    StackName VARCHAR(50)); 
                     END";
                 try
                 {
@@ -214,7 +214,31 @@ namespace Flashcards
             return databaseExists;
         }
 
-        //working through this one I think there must be a better way to do this.
+        internal static bool DoesStackExist(string Name)
+        {
+            bool doesStackExist = true;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+
+                tableCmd.CommandText =
+                    @"USEING FlashCards SELECT COUNT(*) FROM ";
+                try
+                {
+                    int rowsAffected = tableCmd.ExecuteNonQuery();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("Does Stack Exist");
+                    Console.WriteLine(exception);
+                    Console.ReadLine();
+                }
+                connection.Close();
+            }
+
+            return doesStackExist;
+        }
         internal static int LoadStack(string stackName)
         {
             int stackID = -1;
