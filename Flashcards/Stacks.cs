@@ -11,11 +11,12 @@ namespace Flashcards
         internal int StackID {get;set;}
         internal string StackName { get;set;}
 
+        public Stack() {}
+
         public Stack(string stackName)
         {
             StackName = stackName;
             StackID = Data.LoadStack(StackName);
-
         }
         
     }

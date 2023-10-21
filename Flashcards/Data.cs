@@ -223,14 +223,17 @@ namespace Flashcards
                 var tableCmd = connection.CreateCommand();
 
                 tableCmd.CommandText =
-                    @"USEING FlashCards SELECT COUNT(*) FROM ";
+                    $@"SELECT COUNT(*)
+                    FROM FlashCards.dbo.Stacks
+                    WHERE Upper(StackName) = '{Name}'";
                 try
                 {
-                    int rowsAffected = tableCmd.ExecuteNonQuery();
+                    int count = (int)tableCmd.ExecuteScalar();
+                    doesStackExist = (count > 0);
                 }
                 catch (Exception exception)
                 {
-                    Console.WriteLine("Does Stack Exist");
+                    Console.WriteLine("Error in DoesStackExist");
                     Console.WriteLine(exception);
                     Console.ReadLine();
                 }
@@ -247,38 +250,19 @@ namespace Flashcards
                 connection.Open();
                 var tableCmd = connection.CreateCommand();
 
-                tableCmd.CommandText =
-                    $@"USE FlashCards;
-                    INSERT INTO Stacks (StackName) VALUES('{stackName}');";
-                try
-                {
-                    int rowsAffected = tableCmd.ExecuteNonQuery();
-                }
-                catch (Exception exception)
-                {
-                    Console.WriteLine("LoadStack1");
-                    Console.WriteLine(exception);
-                    Console.ReadLine();
-                }
-                tableCmd.CommandText = 
-                    $@"Select last_insert_rowid();";
+                tableCmd.CommandText = "INSERT INTO FlashCards.dbo.Stacks (StackName) VALUES (@StackName); SELECT SCOPE_IDENTITY();";
+                tableCmd.Parameters.Add(new SqlParameter("@StackName", SqlDbType.VarChar) { Value = stackName });
+
                 try
                 {
                     stackID = Convert.ToInt32(tableCmd.ExecuteScalar());
 
-                    if (stackID > 0)
-                    {
-                        //session.Id = insertedId;
-                    }
-                    else
-                    {
-                        // The insert did not affect any rows (may indicate an issue).
-                    }
                 }
                 catch (Exception exception)
                 {
-                    Console.WriteLine("LoadStack2");
+                    Console.WriteLine("Error at LoadStack");
                     Console.WriteLine(exception);
+                    Console.ReadLine();
                 }
                 connection.Close();
             }

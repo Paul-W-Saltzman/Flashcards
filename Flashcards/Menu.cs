@@ -166,7 +166,7 @@ namespace Flashcards
                         isSelected = false;
                         break;
                     case 3://Add Stack
-                        Console.WriteLine(option);
+                        ActionPages.AddStack();
                         isSelected = false;
                         Console.ReadLine();
                         break;
@@ -418,5 +418,7 @@ namespace Flashcards
             Console.WriteLine();
 
         }
+
+        
     }
 }
