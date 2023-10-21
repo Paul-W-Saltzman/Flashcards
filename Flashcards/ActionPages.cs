@@ -28,16 +28,12 @@ namespace Flashcards
                 {
                     newStack = new Stack(newStackName);
                     stackCreated = true;
+
+                    Console.WriteLine($@"Stack {newStack.StackName} with ID {newStack.StackID} has been created");
+                    Console.ReadKey();
                 }
-                Console.WriteLine($@"Stack {newStack.StackName} with ID {newStack.StackID} has been created");
-                Console.ReadKey();
-
-
+                
             }
-
-
-
-
         }
     }
 }
