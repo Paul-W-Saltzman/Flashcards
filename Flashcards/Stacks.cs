@@ -16,7 +16,7 @@ namespace Flashcards
         public Stack(string stackName)
         {
             StackName = stackName;
-            StackID = Data.LoadStack(StackName);
+            StackID = Data.EnterStack(StackName);
         }
         
     }

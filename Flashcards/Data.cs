@@ -20,8 +20,8 @@ namespace Flashcards
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    databaseExists = CheckIfDatabaseExists(connection, databaseName); 
-                }  
+                    databaseExists = CheckIfDatabaseExists(connection, databaseName);
+                }
             }
             catch (Exception ex)
             {
@@ -29,7 +29,7 @@ namespace Flashcards
             }
 
 
-            if (databaseExists) 
+            if (databaseExists)
             {
                 Console.WriteLine("Database Exits.");
             }
@@ -74,7 +74,7 @@ namespace Flashcards
             CreatStacksTable();
             CreateCardsTable();
             CreateSudySessionsTable();
-            
+
         }
 
         private static void CreateSudySessionsTable()
@@ -153,9 +153,9 @@ namespace Flashcards
                 connection.Close();
             }
         }
-     
 
-        private static void CreatStacksTable() 
+
+        private static void CreatStacksTable()
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -242,7 +242,7 @@ namespace Flashcards
 
             return doesStackExist;
         }
-        internal static int LoadStack(string stackName)
+        internal static int EnterStack(string stackName)
         {
             int stackID = -1;
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -267,6 +267,51 @@ namespace Flashcards
                 connection.Close();
             }
             return stackID;
+        }
+
+        internal static List<Stack> LoadStacks()
+        {
+            List<Stack> stacks = new List<Stack>();
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+                SqlDataReader reader = null; 
+                try
+                {
+                    tableCmd.CommandText = "SELECT * FROM FlashCards.dbo.Stacks";
+                    reader = tableCmd.ExecuteReader(); 
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            stacks.Add(
+                                new Stack
+                                {
+                                    StackID = reader.GetInt32(0),
+                                    StackName = reader.GetString(1)
+                                });
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No rows found");
+                        Console.ReadKey();
+                    }
+                }
+                catch (Exception exception) 
+                {
+                    Console.WriteLine("Error at LoadStacks.");
+                    Console.WriteLine(exception.Message); 
+                    Console.ReadLine();
+                }
+                finally
+                {
+                    reader?.Close(); 
+                    connection.Close();
+                }
+            }
+            return stacks;
         }
     }
 }

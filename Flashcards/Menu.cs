@@ -156,13 +156,12 @@ namespace Flashcards
 
                 switch (option)
                 {
-                    case 1:
+                    case 1://Back
                         exitMenu = true;
                         isSelected = true;
                         break;
-                    case 2:
-                        Console.WriteLine(option);
-                        Console.ReadLine();
+                    case 2://View Stacks
+                        ActionPages.ViewStacks();
                         isSelected = false;
                         break;
                     case 3://Add Stack

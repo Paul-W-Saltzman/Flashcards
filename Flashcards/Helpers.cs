@@ -25,6 +25,23 @@ namespace Flashcards
 
         }
 
+        internal static string Sanitize(string toSanitize)
+        {
+            //the assignment is to work with sql direct with the database this is my very humble attempt to stop the most obvious sql injections attacks 
+            // This will not capture everything.
+            toSanitize = toSanitize.Trim();
+            toSanitize = toSanitize.ToLower();
+            int originalLength = toSanitize.Length;
+            toSanitize = toSanitize.Replace("'", "''");
+            toSanitize = toSanitize.Trim();
+            string sanitized = toSanitize;
+            int finalLength = sanitized.Length;
+            if (originalLength != finalLength)
+            { Console.WriteLine("Your input has been sanitized."); }
+            else { }
+            return sanitized;
+        }
+
 
     }
 }
