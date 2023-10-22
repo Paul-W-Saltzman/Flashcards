@@ -48,7 +48,7 @@ namespace Flashcards
                         Console.ReadKey();
                     }
                 }
-                
+
             }
 
         }
@@ -57,7 +57,7 @@ namespace Flashcards
         {
             Console.Clear();
             string pageText = "View Stacks";
-            
+
             ConsoleKeyInfo key;
             int option = 1;
             bool exitMenu = false;
@@ -84,7 +84,7 @@ namespace Flashcards
 
                     foreach (Stack stack in stacks)
                     {
-                        
+
                         Console.WriteLine($@" {(option == index ? color : "    ")}{stack.StackName}{resetColor}");
                         index++;
                     }
@@ -95,10 +95,10 @@ namespace Flashcards
                     switch (key.Key)
                     {
                         case ConsoleKey.DownArrow:
-                            option = (option == (numberOfItems+1) ? 1 : option + 1);
+                            option = (option == (numberOfItems + 1) ? 1 : option + 1);
                             break;
                         case ConsoleKey.UpArrow:
-                            option = (option == 1 ? (numberOfItems+1) : option - 1);
+                            option = (option == 1 ? (numberOfItems + 1) : option - 1);
                             break;
                         case ConsoleKey.Enter:
                             isSelected = true;
@@ -116,7 +116,7 @@ namespace Flashcards
                 {
                     Console.WriteLine($@"Option: {option}");
                     Stack selectedStack = stacks[option - 2];
-                    Console.WriteLine($"Item at index {option -2}: {selectedStack.StackID} {selectedStack.StackName}");
+                    Console.WriteLine($"Item at index {option - 2}: {selectedStack.StackID} {selectedStack.StackName}");
                     Console.ReadKey();
                     isSelected = false;
                 }
@@ -184,9 +184,9 @@ namespace Flashcards
                     break;
                 }
                 else
-                {           
+                {
                     Stack selectedStack = stacks[option - 2];
-                    DeleteStackConfirm( selectedStack );
+                    DeleteStackConfirm(selectedStack);
                     isSelected = false;
                 }
 
@@ -251,6 +251,84 @@ namespace Flashcards
                         break;
                 }
             }
+
+        }
+
+
+        internal static Stack ChooseStack()
+        {
+            Stack selectedStack = new Stack();
+            Console.Clear();
+            string pageText = "Select Stack";
+            ConsoleKeyInfo key;
+            int option = 1;
+            bool exitMenu = false;
+            bool isSelected = false;
+            string color = $"{checkMark}{green}   ";
+
+
+            List<Stack> stacks = Data.LoadStacks();
+            int numberOfItems = stacks.Count;
+            int index = 1;
+
+
+            while (!exitMenu)
+            {
+                while (!isSelected)
+                {
+                    stacks = Data.LoadStacks();
+                    Menu.OpenMenu(pageText);
+
+                    Console.WriteLine("==================");
+                    Console.WriteLine($@"|{(option == index ? color : "    ")}BACK     {resetColor}   |");
+                    Console.WriteLine("==================");
+                    index++;
+
+
+                    foreach (Stack stack in stacks)
+                    {
+
+                        Console.WriteLine($@" {(option == index ? color : "    ")}{stack.StackName}{resetColor}");
+                        index++;
+                    }
+                    index = 1;//reset index
+                    key = Console.ReadKey(true);
+
+
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.DownArrow:
+                            option = (option == (numberOfItems + 1) ? 1 : option + 1);
+                            break;
+                        case ConsoleKey.UpArrow:
+                            option = (option == 1 ? (numberOfItems + 1) : option - 1);
+                            break;
+                        case ConsoleKey.Enter:
+                            isSelected = true;
+                            break;
+                    }
+                }
+
+                if (option == 1)
+                {
+                    exitMenu = true;
+                    break;
+                }
+                else
+                {
+                    selectedStack = stacks[option - 2];
+                    exitMenu = true;
+                    break;
+                }
+            }
+            return selectedStack;
+        }
+
+        internal static void AddCard()
+        {
+            Stack selectedStack = ChooseStack();
+            Console.WriteLine($@"You Choose Stack {selectedStack.StackName}");
+            Console.ReadKey();
 
         }
     }

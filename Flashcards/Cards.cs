@@ -11,8 +11,7 @@ namespace Flashcards
         internal int CardID { get; set; }
         internal int StackID { get; set; }
         internal int NoInStack { get; set; }
-        internal string Front { get; set; }
-        internal string Back { get; set; }
-
+        internal string? Front { get; set; }
+        internal string? Back { get; set; }
     }
 }

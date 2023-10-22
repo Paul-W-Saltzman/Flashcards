@@ -179,7 +179,7 @@ namespace Flashcards
 
                     Console.WriteLine($@"{(option == 1 ? color : "    ")}BACK{resetColor}");
                     Console.WriteLine($@"{(option == 2 ? color : "    ")}View Cards{resetColor}");
-                    Console.WriteLine($@"{(option == 3 ? color : "    ")}Add Cards{resetColor}");
+                    Console.WriteLine($@"{(option == 3 ? color : "    ")}Add Card{resetColor}");
                     Console.WriteLine($@"{(option == 4 ? color : "    ")}Delete Cards{resetColor}");
 
                     key = Console.ReadKey(true);
@@ -203,21 +203,20 @@ namespace Flashcards
 
                 switch (option)
                 {
-                    case 1:
+                    case 1://Back
                         exitMenu = true;
                         isSelected = true;
                         break;
-                    case 2:
+                    case 2://View Cards
                         Console.WriteLine(option);
                         Console.ReadLine();
                         isSelected = false;
                         break;
-                    case 3:
-                        Console.WriteLine(option);
+                    case 3://Add Card
+                        ActionPages.AddCard();
                         isSelected = false;
-                        Console.ReadLine();
                         break;
-                    case 4:
+                    case 4://Delete Cards
                         Console.WriteLine(option);
                         Console.ReadLine();
                         isSelected = false;

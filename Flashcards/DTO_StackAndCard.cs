@@ -8,5 +8,9 @@ namespace Flashcards
 {
     internal class DTO_StackAndCard
     {
+
+
+
+
     }
 }
