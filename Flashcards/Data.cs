@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 using System.IO;
 using System.Data;
 using static System.Collections.Specialized.BitVector32;
+using System.Diagnostics;
 
 namespace Flashcards
 {
@@ -71,7 +72,7 @@ namespace Flashcards
         }
         public static void CreateTables()
         {
-            CreatStacksTable();
+            CreateStacksTable();
             CreateCardsTable();
             CreateSudySessionsTable();
 
@@ -155,7 +156,7 @@ namespace Flashcards
         }
 
 
-        private static void CreatStacksTable()
+        private static void CreateStacksTable()
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -313,5 +314,31 @@ namespace Flashcards
             }
             return stacks;
         }
-    }
+
+        internal static void DelStack(Stack stackToDel)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+
+                tableCmd.CommandText =
+                    $@"DELETE
+                    FROM FlashCards.dbo.Stacks
+                    WHERE StackID = '{stackToDel.StackID}'";
+                try
+                {
+                    int rowsAffected = tableCmd.ExecuteNonQuery();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("Error in DelStack");
+                    Console.WriteLine(exception);
+                    Console.ReadLine();
+                }
+                connection.Close();
+            }
+        }
+     }
 }
+
