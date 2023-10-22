@@ -11,9 +11,9 @@ namespace Flashcards
         internal int StackID {get;set;}
         internal string StackName { get;set;}
 
-        public Stack() {}
+        internal Stack() {}
 
-        public Stack(string stackName)
+        internal Stack(string stackName)
         {
             StackName = stackName;
             StackID = Data.EnterStack(StackName);

@@ -270,6 +270,39 @@ namespace Flashcards
             return stackID;
         }
 
+        internal static int EnterCard(int stackID, int noInStack, string front, string back)
+        {
+            int cardID = -1;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+
+                tableCmd.CommandText = "INSERT INTO FlashCards.dbo.Cards (StackID,NoInStack,Front,Back) VALUES (@StackID,@NoInStack,@Front,@Back); SELECT SCOPE_IDENTITY();";
+                tableCmd.Parameters.Add(new SqlParameter("@StackID", SqlDbType.Int) { Value = stackID});
+                tableCmd.Parameters.Add(new SqlParameter("@NoInStack", SqlDbType.Int) { Value = noInStack});
+                tableCmd.Parameters.Add(new SqlParameter("@Front", SqlDbType.VarChar) { Value = front});
+                tableCmd.Parameters.Add(new SqlParameter("@Back", SqlDbType.VarChar) { Value = back});
+
+                try
+                {
+                    cardID = Convert.ToInt32(tableCmd.ExecuteScalar());
+
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("Error at LoadStack");
+                    Console.WriteLine(exception);
+                    Console.ReadLine();
+                }
+                connection.Close();
+            }
+            return cardID;
+        }
+
+
+
+
         internal static List<Stack> LoadStacks()
         {
             List<Stack> stacks = new List<Stack>();
@@ -313,6 +346,62 @@ namespace Flashcards
                 }
             }
             return stacks;
+        }
+
+        internal static List<Card> LoadCards(int stackID)
+        {
+            List<Card> cards = new List<Card>();
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+                SqlDataReader reader = null;
+                try
+                {
+                    if (stackID == 0)
+                    {
+                        tableCmd.CommandText = "SELECT * FROM FlashCards.dbo.Cards ORDER BY CardID";
+                    }
+                    else
+                    {
+                        tableCmd.CommandText = "SELECT * FROM FlashCards.dbo.Cards WHERE StackID = @StackID ORDER BY CardID";
+                        tableCmd.Parameters.Add(new SqlParameter("@StackID", SqlDbType.Int) { Value = stackID });
+                    }
+                    reader = tableCmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            cards.Add(
+                                new Card
+                                {
+                                    CardID = reader.GetInt32(0),
+                                    StackID = reader.GetInt32(1),
+                                    NoInStack = reader.GetInt32(2),
+                                    Front = reader.GetString(3),
+                                    Back = reader.GetString(4),
+                                });
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No rows found");
+                        Console.ReadKey();
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("Error at LoadCards.");
+                    Console.WriteLine(exception.Message);
+                    Console.ReadLine();
+                }
+                finally
+                {
+                    reader?.Close();
+                    connection.Close();
+                }
+            }
+            return cards;
         }
 
         internal static void DelStack(Stack stackToDel)

@@ -367,8 +367,8 @@ namespace Flashcards
 
             Console.Clear();
             Console.SetCursorPosition(left, top);
-            Console.WriteLine(pageText);
             Console.WriteLine($@"Use {green}{upArrow}{resetColor} and {green}{downArrow}{resetColor} to navigate and press {green}Enter{resetColor} to select.");
+            Console.WriteLine(pageText);
             Console.WriteLine();
 
         }

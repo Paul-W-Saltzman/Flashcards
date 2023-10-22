@@ -259,7 +259,7 @@ namespace Flashcards
         {
             Stack selectedStack = new Stack();
             Console.Clear();
-            string pageText = "Select Stack";
+            string pageText =$@"Please select which stack you would like to {green}Add{resetColor} a {green}Flash Card{resetColor} to.";
             ConsoleKeyInfo key;
             int option = 1;
             bool exitMenu = false;
@@ -329,7 +329,15 @@ namespace Flashcards
             Stack selectedStack = ChooseStack();
             Console.WriteLine($@"You Choose Stack {selectedStack.StackName}");
             Console.ReadKey();
-
+            Console.Clear();
+            Console.WriteLine($@"Please enter the Front of the FlashCard.");
+            string front = Console.ReadLine();
+            Console.Clear();
+            Console.WriteLine($@"Please enter the Back of the FlashCard.");
+            string back = Console.ReadLine();
+            front = Helpers.Sanitize(front);
+            back = Helpers.Sanitize(back);
+            Card newCard = new Card(selectedStack.StackID,front,back);
         }
     }
 }
