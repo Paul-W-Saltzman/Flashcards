@@ -194,7 +194,6 @@ namespace Flashcards
                         case ConsoleKey.UpArrow:
                             option = (option == 1 ? 4 : option - 1);
                             break;
-
                         case ConsoleKey.Enter:
                             isSelected = true;
                             break;
@@ -208,7 +207,7 @@ namespace Flashcards
                         isSelected = true;
                         break;
                     case 2://View Cards
-                        Console.WriteLine(option);
+                        ActionPages.ViewCards();
                         Console.ReadLine();
                         isSelected = false;
                         break;
