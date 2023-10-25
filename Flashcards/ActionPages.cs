@@ -140,6 +140,7 @@ namespace Flashcards
             Stack selectedStack = new Stack();
             Card selectedCard = new Card();
             int numberOfItems = stacks.Count;
+            bool expanded = false;
             int index = 0;
             int offset = 2;
 
@@ -149,10 +150,12 @@ namespace Flashcards
             {
                 while (!isSelected)
                 {
+                    index = 0; 
                     Menu.OpenMenu(pageText);
                     index++;
                     Console.WriteLine("==================");
                     Console.WriteLine($@"|{(option == index ? color : "    ")}BACK     {resetColor}   |");
+                    if (option == index) { expanded = false; }
                     Console.WriteLine("==================");
                     
 
@@ -165,25 +168,31 @@ namespace Flashcards
                         if (option == index)
                         {
                             selectedStack = stack;
+                            expanded = true;
+                        }
+                        else
+                        {
+
+                            expanded = false;
                         }
 
-                            if (selectedStack.StackID == 0) { }
-                            else
+                        if (expanded == true)
+                        {
+                            List<Card> cards = Data.LoadCards(selectedStack.StackID);
+                            numberOfItems = numberOfItems + cards.Count;
+                            offset = 2 + cards.Count;
+                            foreach (Card card in cards)
                             {
-                                List<Card> cards = Data.LoadCards(selectedStack.StackID);
-                                numberOfItems = numberOfItems + cards.Count;
-                                offset = 2 + cards.Count;
-                                foreach (Card card in cards)
+                                index++;
+                                Console.WriteLine($@"       {(option == index ? color : "    ")}{card.Front}{option}{resetColor}");
+                                if (option == index)
                                 {
-                                    index++;
-                                    Console.WriteLine($@"       {(option == index ? color : "    ")}{card.Front}{option}{resetColor}");
-                                    if (option == index)
-                                    {
-                                        selectedCard = card;
-                                    }
-
+                                    selectedCard = card;
                                 }
+
                             }
+                        }
+                        else { }
                          
                     }
 
@@ -208,7 +217,7 @@ namespace Flashcards
                             isSelected = true;
                             break;
                     }
-                index = 1;
+                
                 }
 
                 if (option == 1)
@@ -220,7 +229,7 @@ namespace Flashcards
                 else
                 {
                     Console.WriteLine($@"Option: {option}");
-                    selectedStack = stacks[option - 2];
+                    selectedStack = stacks[option - offset];
                     Console.WriteLine($"Item at index {option - 2}: {selectedStack.StackID} {selectedStack.StackName}");
                     //viewCards = true;
                     Console.ReadKey();
