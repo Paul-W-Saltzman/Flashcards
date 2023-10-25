@@ -163,6 +163,7 @@ namespace Flashcards
                         if (viewCards && selectedStack.StackID == stack.StackID)
                         {
                             List<Card> cards = Data.LoadCards(stack.StackID);
+                            numberOfItems = numberOfItems + cards.Count;
                             foreach (Card card in cards)
                             {
                                 Console.WriteLine($@"       {(option == index ? color : "    ")}{card.Front}{resetColor}");
@@ -170,6 +171,7 @@ namespace Flashcards
                             }
                         }
                     }
+
                     index = 1;//reset index
                     key = Console.ReadKey(true);
 
@@ -186,6 +188,7 @@ namespace Flashcards
                             isSelected = true;
                             break;
                     }
+                index = 1;
                 }
 
                 if (option == 1)
