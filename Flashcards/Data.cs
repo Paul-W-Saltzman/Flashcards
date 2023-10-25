@@ -385,8 +385,7 @@ namespace Flashcards
                     }
                     else
                     {
-                        Console.WriteLine("No rows found");
-                        Console.ReadKey();
+                        //Console.WriteLine("No rows found");
                     }
                 }
                 catch (Exception exception)

@@ -138,8 +138,11 @@ namespace Flashcards
 
             List<Stack> stacks = Data.LoadStacks();
             Stack selectedStack = new Stack();
+            Card selectedCard = new Card();
             int numberOfItems = stacks.Count;
-            int index = 1;
+            int index = 0;
+            int offset = 2;
+
 
 
             while (!exitMenu)
@@ -147,32 +150,43 @@ namespace Flashcards
                 while (!isSelected)
                 {
                     Menu.OpenMenu(pageText);
-
+                    index++;
                     Console.WriteLine("==================");
                     Console.WriteLine($@"|{(option == index ? color : "    ")}BACK     {resetColor}   |");
                     Console.WriteLine("==================");
-                    index++;
+                    
 
 
                     foreach (Stack stack in stacks)
                     {
-
-                        Console.WriteLine($@" {(option == index ? color : "    ")}{stack.StackName}{resetColor}");
                         index++;
+                        Console.WriteLine($@" {(option == index ? color : "    ")}{stack.StackName}{resetColor}");
 
-                        if (viewCards && selectedStack.StackID == stack.StackID)
+                        if (option == index)
                         {
-                            List<Card> cards = Data.LoadCards(stack.StackID);
-                            numberOfItems = numberOfItems + cards.Count;
-                            foreach (Card card in cards)
-                            {
-                                Console.WriteLine($@"       {(option == index ? color : "    ")}{card.Front}{resetColor}");
-                                index++;
-                            }
+                            selectedStack = stack;
                         }
+
+                            if (selectedStack.StackID == 0) { }
+                            else
+                            {
+                                List<Card> cards = Data.LoadCards(selectedStack.StackID);
+                                numberOfItems = numberOfItems + cards.Count;
+                                offset = 2 + cards.Count;
+                                foreach (Card card in cards)
+                                {
+                                    index++;
+                                    Console.WriteLine($@"       {(option == index ? color : "    ")}{card.Front}{option}{resetColor}");
+                                    if (option == index)
+                                    {
+                                        selectedCard = card;
+                                    }
+
+                                }
+                            }
+                         
                     }
 
-                    index = 1;//reset index
                     key = Console.ReadKey(true);
 
 
@@ -180,9 +194,15 @@ namespace Flashcards
                     {
                         case ConsoleKey.DownArrow:
                             option = (option == (numberOfItems + 1) ? 1 : option + 1);
+                            //if (option > 1)
+                            //{ selectedStack = stacks[option - 2]; }
+                            //else { selectedStack = new Stack(); }
                             break;
                         case ConsoleKey.UpArrow:
                             option = (option == 1 ? (numberOfItems + 1) : option - 1);
+                            //if (option > 1)
+                            //{ selectedStack = stacks[option - 2]; }
+                            //else { selectedStack = new Stack(); }
                             break;
                         case ConsoleKey.Enter:
                             isSelected = true;
@@ -202,7 +222,7 @@ namespace Flashcards
                     Console.WriteLine($@"Option: {option}");
                     selectedStack = stacks[option - 2];
                     Console.WriteLine($"Item at index {option - 2}: {selectedStack.StackID} {selectedStack.StackName}");
-                    viewCards = true;
+                    //viewCards = true;
                     Console.ReadKey();
                     isSelected = false;
                 }
