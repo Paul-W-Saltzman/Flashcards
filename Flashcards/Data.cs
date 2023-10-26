@@ -300,6 +300,35 @@ namespace Flashcards
             return cardID;
         }
 
+        internal static void UpdateCard(Card cardToUpdate)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+
+                tableCmd.CommandText =
+                    $@"Update FlashCards.dbo.Cards
+                    SET 
+                    NoInStack ='{cardToUpdate.NoInStack}',
+                    Front ='{cardToUpdate.Front}',
+                    Back ='{cardToUpdate.Back}'
+                    WHERE CardID = '{cardToUpdate.CardID}'";
+                try
+                {
+                    int rowsAffected = tableCmd.ExecuteNonQuery();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("Error in UpdateCard");
+                    Console.WriteLine(exception);
+                    Console.ReadLine();
+                }
+                connection.Close();
+            }
+
+        }
+
         internal static void DeleteCard(Card cardToDelete)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))

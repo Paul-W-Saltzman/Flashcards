@@ -43,5 +43,23 @@ namespace Flashcards
             return noInStack;
         }
 
+        internal static void reNumberCardsInStack(int stackId)
+        {
+            List<Card> cards = Data.LoadCards(stackId);
+            List<Card> sortedCards = cards.OrderBy(o => o.CardID).ToList();
+
+            int i = 1;
+            foreach (Card card in sortedCards)
+            {
+                card.NoInStack = i;
+                i++;
+                Data.UpdateCard(card);
+
+            }
+
+        }
+
+
+
     }
 }

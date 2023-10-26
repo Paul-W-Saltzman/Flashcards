@@ -138,8 +138,8 @@ namespace Flashcards
                 }
                 else
                 {
-                    Data.DeleteCard(Card);
-                   //Renumber the Cards in the stack
+                    Data.DeleteCard(selectedCard);
+                    Card.reNumberCardsInStack(selectedCard.StackID);
                 }
             }
         }

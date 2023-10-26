@@ -42,6 +42,5 @@ namespace Flashcards
             return sanitized;
         }
 
-
     }
 }
