@@ -215,8 +215,7 @@ namespace Flashcards
                         isSelected = false;
                         break;
                     case 4://Delete Cards
-                        Console.WriteLine(option);
-                        Console.ReadLine();
+                        ActionPages.DeleteCards();
                         isSelected = false;
                         break;
 

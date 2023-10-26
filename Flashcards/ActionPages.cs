@@ -150,9 +150,9 @@ namespace Flashcards
 
             while (!exitMenu)
             {
-                DTO_StackAndCard dto_StackAndCard = selectCard();
+                Card selectedCard = selectCard();
 
-                if (dto_StackAndCard.CardFront == null)
+                if (selectedCard.CardID == '0')
                 {
                     exitMenu = true;
                     break;
