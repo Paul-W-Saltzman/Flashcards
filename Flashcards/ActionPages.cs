@@ -125,6 +125,7 @@ namespace Flashcards
 
         internal static void ViewCards()
         {
+            //this menu was hard so I've got more comments here for myself 
             Console.Clear();
             string pageText = "View Stacks";
 
@@ -137,11 +138,16 @@ namespace Flashcards
 
 
             List<Stack> stacks = Data.LoadStacks();
-            Stack selectedStack = new Stack();
+
+            Stack selectedStack = new Stack();//keeps track of the last selected stack
+            Stack controllStack = new Stack();//keeps track of when the selected stack changes
+            Stack lastStack = new Stack();// keeps track of the last stack printed on the screen
             Card selectedCard = new Card();
-            int numberOfItems = stacks.Count;
-            bool expanded = false;
-            int index = 0;
+
+            bool loopAgain = false; //loop again to keep the page updated
+     
+            int numberOfItems = stacks.Count;//keep track of the number of options on the screen
+            int index = 0;//index of each entu item
             int offset = 2;
 
 
@@ -150,74 +156,93 @@ namespace Flashcards
             {
                 while (!isSelected)
                 {
-                    index = 0; 
+                    //resests at top of loop
+                    loopAgain = false;
+                    numberOfItems = stacks.Count;
+                    index = 0;
+                    //end of resets
                     Menu.OpenMenu(pageText);
                     index++;
                     Console.WriteLine("==================");
                     Console.WriteLine($@"|{(option == index ? color : "    ")}BACK     {resetColor}   |");
-                    if (option == index) { expanded = false; }
+                    if (option == index) 
+                    { 
+                        selectedStack = new Stack();//clears out selected stack if this option is selected 
+                        selectedCard = new Card();//reset Selected Card
+                    }
                     Console.WriteLine("==================");
                     
-
-
                     foreach (Stack stack in stacks)
                     {
+                        controllStack = selectedStack;
                         index++;
                         Console.WriteLine($@" {(option == index ? color : "    ")}{stack.StackName}{resetColor}");
-
+                        lastStack = stack;
                         if (option == index)
                         {
                             selectedStack = stack;
-                            expanded = true;
+                            selectedCard = new Card();//reset Selected Card
                         }
-                        else
+                        //if you don't move down to a new stack act normally
+                        if (selectedStack.StackID <= controllStack.StackID)
                         {
 
-                            expanded = false;
-                        }
-
-                        if (expanded == true)
-                        {
-                            List<Card> cards = Data.LoadCards(selectedStack.StackID);
-                            numberOfItems = numberOfItems + cards.Count;
-                            offset = 2 + cards.Count;
-                            foreach (Card card in cards)
+                            if (selectedStack == lastStack)
                             {
-                                index++;
-                                Console.WriteLine($@"       {(option == index ? color : "    ")}{card.Front}{option}{resetColor}");
-                                if (option == index)
+                                List<Card> cards = Data.LoadCards(selectedStack.StackID);
+                                numberOfItems = numberOfItems + cards.Count;
+                                offset = 2 + cards.Count;
+                                foreach (Card card in cards)
                                 {
-                                    selectedCard = card;
+                                    index++;
+                                    Console.WriteLine($@"       {(option == index ? color : "    ")}{card.Front}{resetColor}");
+                                    if (option == index)
+                                    {
+                                        selectedCard = card;
+                                    }
+
                                 }
 
                             }
+                            else 
+                            {
+                                
+                            }
                         }
-                        else { }
-                         
+                        //if you move down to a new stack I need to loop again and check the option to renumber the option
+                        else 
+                        {
+                            if (controllStack.StackID > 0)
+                            {
+                                List<Card> disapearingCards = Data.LoadCards(controllStack.StackID);
+                                option = option - disapearingCards.Count;
+                            }
+                            loopAgain = true; 
+                        }
                     }
 
-                    key = Console.ReadKey(true);
-
-
-                    switch (key.Key)
+                    
+                    if (loopAgain == false)
                     {
-                        case ConsoleKey.DownArrow:
-                            option = (option == (numberOfItems + 1) ? 1 : option + 1);
-                            //if (option > 1)
-                            //{ selectedStack = stacks[option - 2]; }
-                            //else { selectedStack = new Stack(); }
-                            break;
-                        case ConsoleKey.UpArrow:
-                            option = (option == 1 ? (numberOfItems + 1) : option - 1);
-                            //if (option > 1)
-                            //{ selectedStack = stacks[option - 2]; }
-                            //else { selectedStack = new Stack(); }
-                            break;
-                        case ConsoleKey.Enter:
-                            isSelected = true;
-                            break;
+                        key = Console.ReadKey(true);
+                        controllStack = selectedStack;
+                        switch (key.Key)
+                        {
+                            case ConsoleKey.DownArrow:
+                                option = (option == (numberOfItems + 1) ? 1 : option + 1);
+                                break;
+                            case ConsoleKey.UpArrow:
+                                option = (option == 1 ? (numberOfItems + 1) : option - 1);
+                                break;
+                            case ConsoleKey.Enter:
+                                isSelected = true;
+                                break;
+                        }
                     }
-                
+                    else 
+                    { 
+                    }
+
                 }
 
                 if (option == 1)
@@ -228,12 +253,14 @@ namespace Flashcards
                 }
                 else
                 {
-                    Console.WriteLine($@"Option: {option}");
-                    selectedStack = stacks[option - offset];
-                    Console.WriteLine($"Item at index {option - 2}: {selectedStack.StackID} {selectedStack.StackName}");
-                    //viewCards = true;
-                    Console.ReadKey();
+                    Console.Clear();
+                    Console.WriteLine("Card Selected");
+                    Console.WriteLine($@"Stack: {selectedStack.StackName}");
+                    Console.WriteLine($@"Number: in Stack {selectedCard.NoInStack}");
+                    Console.WriteLine($@"Front: {selectedCard.Front}");
+                    Console.WriteLine($@"Back: {selectedCard.Back}");
                     isSelected = false;
+                    Console.ReadKey();
                 }
             }
         }
