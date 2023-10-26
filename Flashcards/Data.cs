@@ -300,7 +300,30 @@ namespace Flashcards
             return cardID;
         }
 
+        internal static void DeleteCard(Card cardToDelete)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
 
+                tableCmd.CommandText =
+                    $@"DELETE
+                    FROM FlashCards.dbo.Cards
+                    WHERE CardID = '{cardToDelete.CardID}'";
+                try
+                {
+                    int rowsAffected = tableCmd.ExecuteNonQuery();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("Error in DeleteCard");
+                    Console.WriteLine(exception);
+                    Console.ReadLine();
+                }
+                connection.Close();
+            }
+        }
 
 
         internal static List<Stack> LoadStacks()

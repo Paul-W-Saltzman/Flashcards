@@ -129,16 +129,16 @@ namespace Flashcards
 
             while (!exitMenu)
             {
-                DTO_StackAndCard dto_StackAndCard = selectCard();
+                Card selectedCard = selectCard();
 
-                if (dto_StackAndCard.CardFront == null)
+                if (selectedCard.CardID == '0')
                 {
                     exitMenu = true;
                     break;
                 }
                 else
                 {
-                   //Delete Card
+                    Data.DeleteCard(Card);
                    //Renumber the Cards in the stack
                 }
             }
@@ -169,7 +169,7 @@ namespace Flashcards
                 }
             }
         }
-        internal static DTO_StackAndCard selectCard()
+        internal static Card selectCard()
         {
             //this menu was hard so I've got more comments here for myself 
             Console.Clear();
@@ -184,7 +184,6 @@ namespace Flashcards
 
             List<Stack> stacks = Data.LoadStacks();
 
-            DTO_StackAndCard dto_StackAndCard = new DTO_StackAndCard();
             Stack selectedStack = new Stack();//keeps track of the last selected stack
             Stack controllStack = new Stack();//keeps track of when the selected stack changes
             Stack lastStack = new Stack();// keeps track of the last stack printed on the screen
@@ -303,13 +302,11 @@ namespace Flashcards
                     }
                     else
                     {
-                        dto_StackAndCard = new DTO_StackAndCard(selectedCard, selectedStack);
-                        isSelected = true;
-                        exitMenu = true;
+                      
                     }
                 }
             }
-            return dto_StackAndCard;
+            return selectedCard;
         }
  
 
