@@ -125,27 +125,52 @@ namespace Flashcards
 
         internal static void ViewCards()
         {
+            bool exitMenu = false;
+
+            while (!exitMenu)
+            {
+                DTO_StackAndCard dto_StackAndCard = selectCard();
+
+                if (dto_StackAndCard.CardFront == null)
+                {
+                    exitMenu = true;
+                    break;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Card Selected");
+                    Console.WriteLine($@"Stack: {dto_StackAndCard.StackName}");
+                    Console.WriteLine($@"Number in Stack: {dto_StackAndCard.CardNumberInStack}");
+                    Console.WriteLine($@"Front: {dto_StackAndCard.CardFront}");
+                    Console.WriteLine($@"Back: {dto_StackAndCard.CardBack}");
+                    Console.ReadKey();
+                }
+            }
+        }
+        internal static DTO_StackAndCard selectCard()
+        {
             //this menu was hard so I've got more comments here for myself 
             Console.Clear();
             string pageText = "View Stacks";
 
             ConsoleKeyInfo key;
             int option = 1;
-            bool exitMenu = false;
-            bool viewCards = false;
             bool isSelected = false;
+            bool exitMenu = false;
             string color = $"{checkMark}{green}   ";
 
 
             List<Stack> stacks = Data.LoadStacks();
 
+            DTO_StackAndCard dto_StackAndCard = new DTO_StackAndCard();
             Stack selectedStack = new Stack();//keeps track of the last selected stack
             Stack controllStack = new Stack();//keeps track of when the selected stack changes
             Stack lastStack = new Stack();// keeps track of the last stack printed on the screen
             Card selectedCard = new Card();
 
             bool loopAgain = false; //loop again to keep the page updated
-     
+
             int numberOfItems = stacks.Count;//keep track of the number of options on the screen
             int index = 0;//index of each entu item
             int offset = 2;
@@ -165,13 +190,13 @@ namespace Flashcards
                     index++;
                     Console.WriteLine("==================");
                     Console.WriteLine($@"|{(option == index ? color : "    ")}BACK     {resetColor}   |");
-                    if (option == index) 
-                    { 
+                    if (option == index)
+                    {
                         selectedStack = new Stack();//clears out selected stack if this option is selected 
                         selectedCard = new Card();//reset Selected Card
                     }
                     Console.WriteLine("==================");
-                    
+
                     foreach (Stack stack in stacks)
                     {
                         controllStack = selectedStack;
@@ -204,24 +229,24 @@ namespace Flashcards
                                 }
 
                             }
-                            else 
+                            else
                             {
-                                
+
                             }
                         }
                         //if you move down to a new stack I need to loop again and check the option to renumber the option
-                        else 
+                        else
                         {
                             if (controllStack.StackID > 0)
                             {
                                 List<Card> disapearingCards = Data.LoadCards(controllStack.StackID);
                                 option = option - disapearingCards.Count;
                             }
-                            loopAgain = true; 
+                            loopAgain = true;
                         }
                     }
 
-                    
+
                     if (loopAgain == false)
                     {
                         key = Console.ReadKey(true);
@@ -239,32 +264,33 @@ namespace Flashcards
                                 break;
                         }
                     }
-                    else 
-                    { 
+                    else
+                    {
                     }
-
                 }
-
                 if (option == 1)
                 {
-                    exitMenu = true;
                     isSelected = true;
+                    exitMenu = true;
                     break;
                 }
                 else
                 {
-                    Console.Clear();
-                    Console.WriteLine("Card Selected");
-                    Console.WriteLine($@"Stack: {selectedStack.StackName}");
-                    Console.WriteLine($@"Number: in Stack {selectedCard.NoInStack}");
-                    Console.WriteLine($@"Front: {selectedCard.Front}");
-                    Console.WriteLine($@"Back: {selectedCard.Back}");
-                    isSelected = false;
-                    Console.ReadKey();
+                    if (selectedCard.CardID == 0)
+                    {
+                        isSelected = false;
+                    }
+                    else
+                    {
+                        dto_StackAndCard = new DTO_StackAndCard(selectedCard, selectedStack);
+                        isSelected = true;
+                        exitMenu = true;
+                    }
                 }
             }
+            return dto_StackAndCard;
         }
-
+ 
 
         internal static void DeleteStacks()
         {

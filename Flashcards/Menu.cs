@@ -208,7 +208,6 @@ namespace Flashcards
                         break;
                     case 2://View Cards
                         ActionPages.ViewCards();
-                        Console.ReadLine();
                         isSelected = false;
                         break;
                     case 3://Add Card
