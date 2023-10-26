@@ -123,6 +123,27 @@ namespace Flashcards
             }
         }
 
+        internal static void DeleteCards()
+        {
+            bool exitMenu = false;
+
+            while (!exitMenu)
+            {
+                DTO_StackAndCard dto_StackAndCard = selectCard();
+
+                if (dto_StackAndCard.CardFront == null)
+                {
+                    exitMenu = true;
+                    break;
+                }
+                else
+                {
+                   //Delete Card
+                   //Renumber the Cards in the stack
+                }
+            }
+        }
+
         internal static void ViewCards()
         {
             bool exitMenu = false;
