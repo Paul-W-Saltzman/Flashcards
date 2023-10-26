@@ -161,10 +161,10 @@ namespace Flashcards
                 {
                     Console.Clear();
                     Console.WriteLine("Card Selected");
-                    Console.WriteLine($@"Stack: {dto_StackAndCard.StackName}");
-                    Console.WriteLine($@"Number in Stack: {dto_StackAndCard.CardNumberInStack}");
-                    Console.WriteLine($@"Front: {dto_StackAndCard.CardFront}");
-                    Console.WriteLine($@"Back: {dto_StackAndCard.CardBack}");
+
+                    Console.WriteLine($@"Number in Stack: {selectedCard.NoInStack}");
+                    Console.WriteLine($@"Front: {selectedCard.Front}");
+                    Console.WriteLine($@"Back: {selectedCard.Back}");
                     Console.ReadKey();
                 }
             }
