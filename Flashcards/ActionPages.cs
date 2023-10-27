@@ -52,7 +52,6 @@ namespace Flashcards
             }
 
         }
-
         internal static void ViewStacks()
         {
             Console.Clear();
@@ -122,7 +121,6 @@ namespace Flashcards
                 }
             }
         }
-
         internal static void DeleteCards()
         {
             bool exitMenu = false;
@@ -131,7 +129,7 @@ namespace Flashcards
             {
                 Card selectedCard = selectCard();
 
-                if (selectedCard.CardID == '0')
+                if (selectedCard.CardID == 0)
                 {
                     exitMenu = true;
                     break;
@@ -140,10 +138,11 @@ namespace Flashcards
                 {
                     Data.DeleteCard(selectedCard);
                     Card.reNumberCardsInStack(selectedCard.StackID);
+                    Console.WriteLine($@"The Card {selectedCard.Front} Has been deleted. Press any key to continue.");
+                    Console.ReadKey();
                 }
             }
         }
-
         internal static void ViewCards()
         {
             bool exitMenu = false;
@@ -152,7 +151,7 @@ namespace Flashcards
             {
                 Card selectedCard = selectCard();
 
-                if (selectedCard.CardID == '0')
+                if (selectedCard.CardID == 0)
                 {
                     exitMenu = true;
                     break;
@@ -302,14 +301,13 @@ namespace Flashcards
                     }
                     else
                     {
-                      
+                        isSelected = true;
+                        exitMenu = true;
                     }
                 }
             }
             return selectedCard;
         }
- 
-
         internal static void DeleteStacks()
         {
             Console.Clear();
@@ -379,8 +377,6 @@ namespace Flashcards
             }
 
         }
-        
-
         internal static void DeleteStackConfirm(Stack stackToDel)
         {
             Console.Clear();
@@ -441,8 +437,6 @@ namespace Flashcards
             }
 
         }
-
-
         internal static Stack ChooseStack()
         {
             Stack selectedStack = new Stack();
@@ -511,7 +505,6 @@ namespace Flashcards
             }
             return selectedStack;
         }
-
         internal static void AddCard()
         {
             Stack selectedStack = ChooseStack();
