@@ -127,7 +127,7 @@ namespace Flashcards
 
             while (!exitMenu)
             {
-                Card selectedCard = selectCard();
+                Card selectedCard = SelectCard();
 
                 if (selectedCard.CardID == 0)
                 {
@@ -149,7 +149,7 @@ namespace Flashcards
 
             while (!exitMenu)
             {
-                Card selectedCard = selectCard();
+                Card selectedCard = SelectCard();
 
                 if (selectedCard.CardID == 0)
                 {
@@ -168,7 +168,7 @@ namespace Flashcards
                 }
             }
         }
-        internal static Card selectCard()
+        internal static Card SelectCard()
         {
             //this menu was hard so I've got more comments here for myself 
             Console.Clear();
@@ -437,11 +437,10 @@ namespace Flashcards
             }
 
         }
-        internal static Stack ChooseStack()
+        internal static Stack ChooseStack(String pageText)
         {
             Stack selectedStack = new Stack();
             Console.Clear();
-            string pageText =$@"Please select which stack you would like to {green}Add{resetColor} a {green}Flash Card{resetColor} to.";
             ConsoleKeyInfo key;
             int option = 1;
             bool exitMenu = false;
@@ -507,7 +506,9 @@ namespace Flashcards
         }
         internal static void AddCard()
         {
-            Stack selectedStack = ChooseStack();
+
+            String pageText = $@"Please select which stack you would like to {green}Add{resetColor} a {green}Flash Card{resetColor} to.";
+            Stack selectedStack = ChooseStack(pageText);
             Console.WriteLine($@"You Choose Stack {selectedStack.StackName}");
             Console.ReadKey();
             Console.Clear();

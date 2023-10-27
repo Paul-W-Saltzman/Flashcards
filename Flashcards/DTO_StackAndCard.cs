@@ -27,5 +27,26 @@ namespace Flashcards
             CardFront = card.Front;
             CardBack = card.Back;
         }
+
+        public static List<DTO_StackAndCard> LoadStackAndCardList(Stack selectedStack)
+        {
+            List <DTO_StackAndCard> studySession = new List<DTO_StackAndCard>();
+            List<Card> cards = Data.LoadCards(selectedStack.StackID);
+            foreach (Card card in cards) 
+            {
+                DTO_StackAndCard stackAndCard = new DTO_StackAndCard(card, selectedStack);
+                studySession.Add(stackAndCard);
+            }
+
+            return studySession;
+        }
+
+        public static void studySession(List<DTO_StackAndCard> studySession)
+        {
+            foreach (DTO_StackAndCard card in studySession)
+            {
+
+            }
+        }
     }
 }

@@ -225,68 +225,21 @@ namespace Flashcards
 
         internal static void StudyMenu()
         {
-            Console.Clear();
-
-            string pageText = "Study Menu";
-            ConsoleKeyInfo key;
-            int option = 1;
             bool exitMenu = false;
-            bool isSelected = false;
-            string color = $"{checkMark}{green}   ";
-
+            String pageText = "Please Choose the stack you want to study.";
 
             while (!exitMenu)
             {
-                while (!isSelected)
+                Stack selectedStack = ActionPages.ChooseStack(pageText);
+                if (selectedStack.StackID == 0)
                 {
-                    OpenMenu(pageText);
-
-                    Console.WriteLine($@"{(option == 1 ? color : "    ")}BACK{resetColor}");
-                    Console.WriteLine($@"{(option == 2 ? color : "    ")}stack{resetColor}");
-                    Console.WriteLine($@"{(option == 3 ? color : "    ")}stack{resetColor}");
-                    Console.WriteLine($@"{(option == 4 ? color : "    ")}stack{resetColor}");
-                    /// going to need to figure out this one
-                    key = Console.ReadKey(true);
-
-
-
-                    switch (key.Key)
-                    {
-                        case ConsoleKey.DownArrow:
-                            option = (option == 4 ? 1 : option + 1);
-                            break;
-                        case ConsoleKey.UpArrow:
-                            option = (option == 1 ? 4 : option - 1);
-                            break;
-
-                        case ConsoleKey.Enter:
-                            isSelected = true;
-                            break;
-                    }
+                    exitMenu = true;
+                    break;
                 }
-
-                switch (option)
+                else 
                 {
-                    case 1:
-                        exitMenu = true;
-                        isSelected = true;
-                        break;
-                    case 2:
-                        Console.WriteLine(option);
-                        Console.ReadLine();
-                        isSelected = false;
-                        break;
-                    case 3:
-                        Console.WriteLine(option);
-                        isSelected = false;
-                        Console.ReadLine();
-                        break;
-                    case 4:
-                        Console.WriteLine(option);
-                        Console.ReadLine();
-                        isSelected = false;
-                        break;
-
+                    List <DTO_StackAndCard> studySession = DTO_StackAndCard.LoadStackAndCardList(selectedStack);
+                    //Action Page Flash Card Session
                 }
             }
         }

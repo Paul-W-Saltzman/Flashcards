@@ -59,7 +59,5 @@ namespace Flashcards
 
         }
 
-
-
     }
 }
