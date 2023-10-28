@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Flashcards
@@ -42,5 +43,15 @@ namespace Flashcards
             return sanitized;
         }
 
+        internal static bool CompareStrings(string string1, string string2)
+        {
+            bool match = false;
+            string1 = string1.Trim().ToLower();
+            string2 = string2.Trim().ToLower();
+            string1 = Regex.Replace(string1, @"\s", "");
+            string2 = Regex.Replace(string2, @"\s", "");
+            if (string1 == string2) { match = true; }
+            return match;
+        }
     }
 }

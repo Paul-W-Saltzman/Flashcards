@@ -300,6 +300,37 @@ namespace Flashcards
             return cardID;
         }
 
+        internal static int EnterStudySession(StudySession sessionToLoad)
+        {
+            int studySessionID = -1;
+            using(SqlConnection connection = new SqlConnection(connectionString)) 
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+
+                tableCmd.CommandText = "INSERT INTO FlashCards.dbo.Cards (StackID,Date,StackName,Correct,Total,Score) VALUES (@StackID,@Date,@StackName,@Correct,@Total,@Score); SELECT SCOPE_IDENTIFY();";
+                tableCmd.Parameters.Add(new SqlParameter("@StackID", SqlDbType.Int) { Value = sessionToLoad.StackID });
+                tableCmd.Parameters.Add(new SqlParameter("@Date", SqlDbType.Date) { Value = sessionToLoad.Date });
+                tableCmd.Parameters.Add(new SqlParameter("@StackName", SqlDbType.VarChar) { Value = sessionToLoad.StackName });
+                tableCmd.Parameters.Add(new SqlParameter("@Correct", SqlDbType.Int) { Value = sessionToLoad.Correct });
+                tableCmd.Parameters.Add(new SqlParameter("@Total", SqlDbType.Int) { Value = sessionToLoad.Total });
+                tableCmd.Parameters.Add(new SqlParameter("@Score",SqlDbType.Real) { Value = sessionToLoad.Score });
+
+                try
+                {
+
+                }
+                catch (Exception exception) 
+                {
+                    Console.WriteLine("Error at Session to Load");
+                    Console.WriteLine(exception);
+                    Console.ReadLine();
+                }
+                connection.Close();
+            }
+            return studySessionID;
+        }
+
         internal static void UpdateCard(Card cardToUpdate)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))

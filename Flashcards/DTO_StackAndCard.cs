@@ -9,6 +9,7 @@ namespace Flashcards
     internal class DTO_StackAndCard
     {
 
+        internal int StackID;
         internal String StackName;
         internal int CardNumberInStack;
         internal String CardFront;
@@ -22,6 +23,7 @@ namespace Flashcards
 
         public DTO_StackAndCard(Card card, Stack stack)
         {
+            StackID = stack.StackID;
             StackName = stack.StackName;
             CardNumberInStack = card.NoInStack;
             CardFront = card.Front;
@@ -41,12 +43,6 @@ namespace Flashcards
             return studySession;
         }
 
-        public static void studySession(List<DTO_StackAndCard> studySession)
-        {
-            foreach (DTO_StackAndCard card in studySession)
-            {
-
-            }
-        }
+       
     }
 }
