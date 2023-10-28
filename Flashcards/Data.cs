@@ -96,7 +96,7 @@ namespace Flashcards
                     StackName VARCHAR(50),
                     Correct INT,
                     Total INT,
-                    Score INT
+                    Score REAL
                     CONSTRAINT fk_study_stack_id
                         FOREIGN KEY (StackID)
                         REFERENCES Stacks (StackID)
@@ -308,7 +308,7 @@ namespace Flashcards
                 connection.Open();
                 var tableCmd = connection.CreateCommand();
 
-                tableCmd.CommandText = "INSERT INTO FlashCards.dbo.Cards (StackID,Date,StackName,Correct,Total,Score) VALUES (@StackID,@Date,@StackName,@Correct,@Total,@Score); SELECT SCOPE_IDENTIFY();";
+                tableCmd.CommandText = "INSERT INTO FlashCards.dbo.StudySessions (StackID,Date,StackName,Correct,Total,Score) VALUES (@StackID,@Date,@StackName,@Correct,@Total,@Score); SELECT SCOPE_IDENTITY();";
                 tableCmd.Parameters.Add(new SqlParameter("@StackID", SqlDbType.Int) { Value = sessionToLoad.StackID });
                 tableCmd.Parameters.Add(new SqlParameter("@Date", SqlDbType.Date) { Value = sessionToLoad.Date });
                 tableCmd.Parameters.Add(new SqlParameter("@StackName", SqlDbType.VarChar) { Value = sessionToLoad.StackName });
@@ -318,7 +318,7 @@ namespace Flashcards
 
                 try
                 {
-
+                    studySessionID = Convert.ToInt32(tableCmd.ExecuteScalar());
                 }
                 catch (Exception exception) 
                 {

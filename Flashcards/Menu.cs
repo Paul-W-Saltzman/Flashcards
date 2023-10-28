@@ -80,7 +80,7 @@ namespace Flashcards
                         break;
                     case 5:
                         Console.WriteLine(option);
-                        StudySessionMenu();
+                        //StudySessionMenu();
                         isSelected = false;
                         break;
 
@@ -239,6 +239,7 @@ namespace Flashcards
                 else 
                 {
                     List <DTO_StackAndCard> studySession = DTO_StackAndCard.LoadStackAndCardList(selectedStack);
+                    StudySession.Study(studySession);
                     //Action Page Flash Card Session
                 }
             }

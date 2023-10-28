@@ -62,6 +62,8 @@ namespace Flashcards
 
             }
             StudySession thisStudySession = new StudySession(stackID,date,stackName,correct,total);
+            Console.WriteLine($@"This Study Session{thisStudySession.StudySessionID}");
+            Console.ReadLine();
             //Display study session
         }
     }
