@@ -34,7 +34,7 @@ namespace Flashcards
                     Console.WriteLine($@"{(option == 2 ? color : "    ")}Manage Stacks{resetColor}");
                     Console.WriteLine($@"{(option == 3 ? color : "    ")}Manage FlashCards{resetColor}");
                     Console.WriteLine($@"{(option == 4 ? color : "    ")}Study {resetColor}");
-                    Console.WriteLine($@"{(option == 5 ? color : "    ")}View Study Sessions {resetColor}");
+                    Console.WriteLine($@"{(option == 5 ? color : "    ")}Study Sessions Reporting {resetColor}");
 
                     key = Console.ReadKey(true);
 
@@ -59,28 +59,28 @@ namespace Flashcards
 
                 switch (option)
                 {
-                    case 1:
+                    case 1://Exit Complete
                         exitMenu = true;
                         isSelected = true;
                         break;
-                    case 2:
+                    case 2://Manage Stacks Complete
                         Console.WriteLine(option);
                         StackMenu();
                         isSelected = false;
                         break;
-                    case 3:
+                    case 3://Manage Flash Cards Complete
                         Console.WriteLine(option);
                         FLashCardMenu();
                         isSelected = false;
                         break;
-                    case 4:
+                    case 4://Study Complete
                         Console.WriteLine(option);
                         StudyMenu();
                         isSelected = false;
                         break;
-                    case 5:
+                    case 5: //Study Session Reporting Working
                         Console.WriteLine(option);
-                        //StudySessionMenu();
+                        ReportingMenu();
                         isSelected = false;
                         break;
 
@@ -92,7 +92,6 @@ namespace Flashcards
             Console.ReadLine();
 
         }
-
         internal static void StackMenu()
         {
             Console.Clear();
@@ -245,70 +244,65 @@ namespace Flashcards
             }
         }
 
-        //internal static void StudySessionMenu()
-        //{
-        //    Console.Clear();
-        //    string pageText = "Study Session Menu";
-        //    ConsoleKeyInfo key;
-        //    int option = 1;
-        //    bool exitMenu = false;
-        //    bool isSelected = false;
-        //    string color = $"{checkMark}{green}   ";
+        internal static void ReportingMenu()
+        {
+            Console.Clear();
+            string pageText = "Reporting Menu";
+            ConsoleKeyInfo key;
+            int option = 1;
+            bool exitMenu = false;
+            bool isSelected = false;
+            string color = $"{checkMark}{green}   ";
 
 
-        //    while (!exitMenu)
-        //    {
-        //        while (!isSelected)
-        //        {
-        //            OpenMenu(pageText);
+            while (!exitMenu)
+            {
+                while (!isSelected)
+                {
+                    OpenMenu(pageText);
 
-        //            Console.WriteLine($@"{(option == 1 ? color : "    ")}BACK{resetColor}");
-        //            Console.WriteLine($@"{(option == 2 ? color : "    ")}stack{resetColor}");
-        //            Console.WriteLine($@"{(option == 3 ? color : "    ")}stack{resetColor}");
-        //            Console.WriteLine($@"{(option == 4 ? color : "    ")}stack{resetColor}");
-        //            /// going to need to figure out this one as well
-        //            key = Console.ReadKey(true);
+                    Console.WriteLine($@"{(option == 1 ? color : "    ")}BACK{resetColor}");
+                    Console.WriteLine($@"{(option == 2 ? color : "    ")}View Session{resetColor}");
+                    Console.WriteLine($@"{(option == 3 ? color : "    ")}By Month Year{resetColor}");
 
-        //            switch (key.Key)
-        //            {
-        //                case ConsoleKey.DownArrow:
-        //                    option = (option == 4 ? 1 : option + 1);
-        //                    break;
-        //                case ConsoleKey.UpArrow:
-        //                    option = (option == 1 ? 4 : option - 1);
-        //                    break;
+                    /// going to need to figure out this one as well
+                    key = Console.ReadKey(true);
 
-        //                case ConsoleKey.Enter:
-        //                    isSelected = true;
-        //                    break;
-        //            }
-        //        }
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.DownArrow:
+                            option = (option == 3 ? 1 : option + 1);
+                            break;
+                        case ConsoleKey.UpArrow:
+                            option = (option == 1 ? 3 : option - 1);
+                            break;
 
-        //        switch (option)
-        //        {
-        //            case 1:
-        //                exitMenu = true;
-        //                isSelected = true;
-        //                break;
-        //            case 2:
-        //                Console.WriteLine(option);
-        //                Console.ReadLine();
-        //                isSelected = false;
-        //                break;
-        //            case 3:
-        //                Console.WriteLine(option);
-        //                isSelected = false;
-        //                Console.ReadLine();
-        //                break;
-        //            case 4:
-        //                Console.WriteLine(option);
-        //                Console.ReadLine();
-        //                isSelected = false;
-        //                break;
+                        case ConsoleKey.Enter:
+                            isSelected = true;
+                            break;
+                    }
+                }
 
-        //        }
-        //    }
-        //}
+                switch (option)
+                {
+                    case 1://Exit
+                        exitMenu = true;
+                        isSelected = true;
+                        break;
+                    case 2://View Sessions
+                        Console.WriteLine(option);
+                        Console.ReadLine();
+                        isSelected = false;
+                        break;
+                    case 3://View Pivot Table
+                        Console.WriteLine(option);
+                        isSelected = false;
+                        Console.ReadLine();
+                        break;
+
+                }
+            }
+        }
 
         internal static void OpenMenu(string pageText)
         {

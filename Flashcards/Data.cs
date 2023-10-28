@@ -5,6 +5,8 @@ using System.IO;
 using System.Data;
 using static System.Collections.Specialized.BitVector32;
 using System.Diagnostics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Reflection.PortableExecutable;
 
 namespace Flashcards
 {
@@ -500,6 +502,7 @@ namespace Flashcards
                 try
                 {
                     int rowsAffected = tableCmd.ExecuteNonQuery();
+
                 }
                 catch (Exception exception)
                 {
@@ -509,6 +512,58 @@ namespace Flashcards
                 }
                 connection.Close();
             }
+        }
+
+        internal static List<StudySessionReport> GetReport(int stackID, int year)
+        {
+            List<StudySessionReport> reports = new List<StudySessionReport>();
+            StudySessionReport report = new StudySessionReport();
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+                SqlDataReader reader = null;
+
+                tableCmd.CommandText =
+                    $@"SELECT * FROM(
+                       SELECT[StackID], [StackName], YEAR([Date]) AS[Year], MONTH([Date]) AS[Month], [Correct]
+                       FROM[FlashCards].[dbo].[StudySessions]
+                       ) AS SourceTable
+                       PIVOT(SUM([Correct]) FOR[Month] IN([1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12])) AS PivotTable";
+
+                reader = tableCmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        reports.Add(
+                        new StudySessionReport
+                        {
+                            StackID = reader.GetInt32(0),
+                            StackName = reader.GetString(1),
+                            YEAR = reader.GetInt32(2),
+                            January = reader.GetInt32(3),
+                            February = reader.GetInt32(4),
+                            March = reader.GetInt32(5),
+                            April = reader.GetInt32(6),
+                            May = reader.GetInt32(7),
+                            June = reader.GetInt32(8),
+                            July = reader.GetInt32(9),
+                            August = reader.GetInt32(10),
+                            September = reader.GetInt32(11),
+                            October = reader.GetInt32(12),
+                            November = reader.GetInt32(13),
+                            December = reader.GetInt32(14)
+                        });
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No rows found");
+                    Console.ReadKey();
+                }
+            }
+            return reports;
         }
      }
 }
