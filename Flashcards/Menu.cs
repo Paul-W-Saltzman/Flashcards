@@ -276,7 +276,6 @@ namespace Flashcards
                         case ConsoleKey.UpArrow:
                             option = (option == 1 ? 3 : option - 1);
                             break;
-
                         case ConsoleKey.Enter:
                             isSelected = true;
                             break;
@@ -295,11 +294,10 @@ namespace Flashcards
                         isSelected = false;
                         break;
                     case 3://View Pivot Table
-                        Console.WriteLine(option);
+                        ActionPages.ReportByYear();
                         isSelected = false;
                         Console.ReadLine();
                         break;
-
                 }
             }
         }

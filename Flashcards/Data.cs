@@ -387,7 +387,6 @@ namespace Flashcards
             }
         }
 
-
         internal static List<Stack> LoadStacks()
         {
             List<Stack> stacks = new List<Stack>();
@@ -514,23 +513,28 @@ namespace Flashcards
             }
         }
 
-        internal static List<StudySessionReport> GetReport(int stackID, int year)
+        internal static List<StudySessionReport> GetReports()
         {
             List<StudySessionReport> reports = new List<StudySessionReport>();
             StudySessionReport report = new StudySessionReport();
-            using (SqlConnection connection = new SqlConnection())
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 var tableCmd = connection.CreateCommand();
                 SqlDataReader reader = null;
 
                 tableCmd.CommandText =
-                    $@"SELECT * FROM(
-                       SELECT[StackID], [StackName], YEAR([Date]) AS[Year], MONTH([Date]) AS[Month], [Correct]
-                       FROM[FlashCards].[dbo].[StudySessions]
-                       ) AS SourceTable
-                       PIVOT(SUM([Correct]) FOR[Month] IN([1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12])) AS PivotTable";
-
+                    $@"WITH CTE AS (
+                    SELECT [StackID], [StackName], YEAR([Date]) AS [Year], MONTH([Date]) AS [Month], [Correct]
+                    FROM [FlashCards].[dbo].[StudySessions]
+                    )
+                    SELECT *
+                    FROM CTE
+                    PIVOT (
+                    SUM([Correct])
+                    FOR [Month] IN ([1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12])
+                    ) AS PivotTable";
+                
                 reader = tableCmd.ExecuteReader();
                 if (reader.HasRows)
                 {
@@ -542,18 +546,18 @@ namespace Flashcards
                             StackID = reader.GetInt32(0),
                             StackName = reader.GetString(1),
                             YEAR = reader.GetInt32(2),
-                            January = reader.GetInt32(3),
-                            February = reader.GetInt32(4),
-                            March = reader.GetInt32(5),
-                            April = reader.GetInt32(6),
-                            May = reader.GetInt32(7),
-                            June = reader.GetInt32(8),
-                            July = reader.GetInt32(9),
-                            August = reader.GetInt32(10),
-                            September = reader.GetInt32(11),
-                            October = reader.GetInt32(12),
-                            November = reader.GetInt32(13),
-                            December = reader.GetInt32(14)
+                            January = reader.IsDBNull(3) ? 0 : reader.GetInt32(3),
+                            February = reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
+                            March = reader.IsDBNull(5) ? 0 : reader.GetInt32(5),
+                            April = reader.IsDBNull(6) ? 0 : reader.GetInt32(6),
+                            May = reader.IsDBNull(7) ? 0 : reader.GetInt32(7),
+                            June = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
+                            July = reader.IsDBNull(9) ? 0 : reader.GetInt32(9),
+                            August = reader.IsDBNull(10) ? 0 : reader.GetInt32(10),
+                            September = reader.IsDBNull(11) ? 0 : reader.GetInt32(11),
+                            October = reader.IsDBNull(12) ? 0 : reader.GetInt32(12),
+                            November = reader.IsDBNull(13) ? 0 : reader.GetInt32(13),
+                            December = reader.IsDBNull(14) ? 0 : reader.GetInt32(14)
                         });
                     }
                 }

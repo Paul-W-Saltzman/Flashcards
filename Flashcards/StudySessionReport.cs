@@ -25,6 +25,4 @@ namespace Flashcards
         internal int December;
 
     }
-
-
 }

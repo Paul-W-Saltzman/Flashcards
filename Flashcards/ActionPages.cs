@@ -521,5 +521,23 @@ namespace Flashcards
             back = Helpers.Sanitize(back);
             Card newCard = new Card(selectedStack.StackID,front,back);
         }
+        internal static void ReportByYear()
+        {
+            List<StudySessionReport> studySessions = Data.GetReports();
+            var years = studySessions.Select(report => report.YEAR).Distinct().ToList();
+
+            Console.WriteLine("ReportYears:");
+
+            foreach (StudySessionReport session in studySessions)
+            {
+                Console.WriteLine(session.YEAR);
+            }
+
+            Console.WriteLine("Unique Years:");
+            foreach (var year in years) 
+            {
+                Console.WriteLine(year);
+            }
+        }
     }
 }
