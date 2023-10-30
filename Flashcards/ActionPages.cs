@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic.FileIO;
+﻿using Microsoft.VisualBasic;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -342,6 +343,7 @@ namespace Flashcards
 
                         Console.WriteLine($@" {(option == index ? color : "    ")}{stack.StackName}{resetColor}");
                         index++;
+                    }
 
                             index = 1;//reset index
                         key = Console.ReadKey(true);
@@ -373,7 +375,7 @@ namespace Flashcards
                         DeleteStackConfirm(selectedStack);
                         isSelected = false;
                     }
-                }
+
             }
 
         }
@@ -524,19 +526,81 @@ namespace Flashcards
         internal static void ReportByYear()
         {
             List<StudySessionReport> studySessions = Data.GetReports();
-            var years = studySessions.Select(report => report.YEAR).Distinct().ToList();
+            List<StudySessionReport> studySessionByYear = new List<StudySessionReport>();
 
-            Console.WriteLine("ReportYears:");
 
-            foreach (StudySessionReport session in studySessions)
+
+            List<int> years = studySessions.Select(report => report.YEAR).Distinct().ToList();
+
+            years.Sort();
+
+            Console.Clear();
+            string pageText = "Study Session by Month";
+            ConsoleKeyInfo key;
+            int option = 1;
+            bool exitMenu = false;
+            bool isSelected = false;
+            string color = $"{checkMark}{green}   ";
+
+            int numberOfItems = years.Count;
+            int index = 1;
+
+
+            while (!exitMenu) 
             {
-                Console.WriteLine(session.YEAR);
-            }
+                while (!isSelected)
+                {
+                    Menu.OpenMenu(pageText);
 
-            Console.WriteLine("Unique Years:");
-            foreach (var year in years) 
-            {
-                Console.WriteLine(year);
+                    Console.WriteLine();
+                    Console.WriteLine($@"{(option == index ? color : "    ")}BACK     {resetColor}   ");
+                    index++;
+
+                    foreach (int year in years)
+                    {
+                        Console.WriteLine($@" {(option == index ? color : "    ")}{year}{resetColor}");
+                        index++;
+
+                    }
+                    index = 1;//reset index
+                    key = Console.ReadKey(true);
+
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.DownArrow:
+                            option = (option == (numberOfItems + 1) ? 1 : option + 1);
+                            break;
+                        case ConsoleKey.UpArrow:
+                            option = (option == 1 ? (numberOfItems + 1) : option - 1);
+                            break;
+                        case ConsoleKey.Enter:
+                            isSelected = true;
+                            break;
+                    }
+                }
+
+                if (option == 1)
+                {
+                exitMenu = true;
+                isSelected = true;
+                break;
+                }
+                else
+                {
+                int year = years[option - 2];
+                Console.WriteLine($@"Selected Year:  {year}");
+                Console.ReadKey();
+                foreach( StudySessionReport report in studySessions ) 
+                {
+                        if ( report.YEAR == year ) 
+                        {
+                           studySessionByYear.Add( report );
+                        }
+                }
+                StudySessionReport.ShowReport(studySessionByYear);
+                isSelected = false;
+                }
+                
             }
         }
     }

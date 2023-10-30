@@ -295,8 +295,7 @@ namespace Flashcards
                         break;
                     case 3://View Pivot Table
                         ActionPages.ReportByYear();
-                        isSelected = false;
-                        Console.ReadLine();
+                        isSelected = false;;
                         break;
                 }
             }
