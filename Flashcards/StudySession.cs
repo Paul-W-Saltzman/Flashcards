@@ -19,6 +19,11 @@ namespace Flashcards
         internal int Total { get; set; }
         internal double Score { get; set; }
 
+        internal StudySession()
+        {
+
+        }
+
         private StudySession(int stackID, DateOnly date, string stackName, int correct, int total )
         { 
             this.StackID = stackID;

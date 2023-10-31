@@ -20,3 +20,5 @@ Below’s a screenshot with an example of the finished report. You’ll need to 
 https://www.youtube.com/watch?v=YyD1MRJY0qI
 https://www.connectionstrings.com/sql-server-2019/
 https://learn.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-7.0
+https://erikej.github.io/dotnet/sqlclient/2022/11/17/sqlclient-dateonly.html
+https://stackoverflow.com/questions/2762302/appropriate-datatype-for-holding-percent-values#:~:text=If%20you%20are%20going%20to%20store%20their%20face%20value%20(e.g.,with%20an%20appropriate%20CHECK%20constraint.

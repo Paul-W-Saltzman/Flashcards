@@ -289,8 +289,7 @@ namespace Flashcards
                         isSelected = true;
                         break;
                     case 2://View Sessions
-                        Console.WriteLine(option);
-                        Console.ReadLine();
+                        ActionPages.ViewStudySessions();
                         isSelected = false;
                         break;
                     case 3://View Pivot Table

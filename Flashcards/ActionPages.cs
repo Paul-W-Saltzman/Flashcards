@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using static Flashcards.GlobalVariables;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Flashcards
 {
@@ -439,7 +440,7 @@ namespace Flashcards
             }
 
         }
-        internal static Stack ChooseStack(String pageText)
+        internal static Stack ChooseStack(string pageText)
         {
             Stack selectedStack = new Stack();
             Console.Clear();
@@ -522,6 +523,19 @@ namespace Flashcards
             front = Helpers.Sanitize(front);
             back = Helpers.Sanitize(back);
             Card newCard = new Card(selectedStack.StackID,front,back);
+        }
+
+        internal static void ViewStudySessions()
+        {
+            string pageText = "Choose the stack to view the Study Sessions for that stack.";
+            Stack stack = ChooseStack(pageText);
+            List<StudySession> studysessions = Data.LoadStudySessions(stack);
+            Console.WriteLine($@"| Date | StackName | Correct | Total | Score |");
+            foreach (StudySession session in studysessions)
+            {
+                Console.WriteLine($@"{session.Date}|{session.StackName}|{session.Correct}|{session.Total}|{session.Score}");
+            }
+            
         }
         internal static void ReportByYear()
         {

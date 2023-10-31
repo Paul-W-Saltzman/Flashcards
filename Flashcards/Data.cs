@@ -98,7 +98,7 @@ namespace Flashcards
                     StackName VARCHAR(50),
                     Correct INT,
                     Total INT,
-                    Score REAL
+                    Score DECIMAL(5,2)
                     CONSTRAINT fk_study_stack_id
                         FOREIGN KEY (StackID)
                         REFERENCES Stacks (StackID)
@@ -316,7 +316,7 @@ namespace Flashcards
                 tableCmd.Parameters.Add(new SqlParameter("@StackName", SqlDbType.VarChar) { Value = sessionToLoad.StackName });
                 tableCmd.Parameters.Add(new SqlParameter("@Correct", SqlDbType.Int) { Value = sessionToLoad.Correct });
                 tableCmd.Parameters.Add(new SqlParameter("@Total", SqlDbType.Int) { Value = sessionToLoad.Total });
-                tableCmd.Parameters.Add(new SqlParameter("@Score",SqlDbType.Real) { Value = sessionToLoad.Score });
+                tableCmd.Parameters.Add(new SqlParameter("@Score",SqlDbType.Decimal) { Precision = 5, Scale = 2, Value = sessionToLoad.Score });
 
                 try
                 {
@@ -485,6 +485,49 @@ namespace Flashcards
                 }
             }
             return cards;
+        }
+
+        internal static List<StudySession> LoadStudySessions(Stack stack)
+        {
+            List<StudySession> studySessions = new List<StudySession>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+                SqlDataReader reader = null;
+
+                tableCmd.CommandText =
+                    $@"SELECT * FROM [FlashCards].[dbo].[StudySessions]
+                        WHERE StackID = '{stack.StackID}'";
+
+                reader = tableCmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        studySessions.Add(
+                            new StudySession
+                            {
+                                StudySessionID = reader.GetInt32(0),
+                                StackID = reader.GetInt32(1),
+                                Date = reader.GetFieldValue<DateOnly>(2),
+                                StackName = reader.GetString(3),
+                                Correct = reader.GetInt32(4),
+                                Total = reader.GetInt32(5),
+                                Score = reader.GetFieldValue<double>(6),
+                            });
+
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No Rows Found");
+                    Console.ReadKey();
+                }
+                connection.Close();
+            }
+
+            return studySessions;
         }
 
         internal static void DelStack(Stack stackToDel)
