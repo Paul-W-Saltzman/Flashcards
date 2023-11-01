@@ -533,8 +533,10 @@ namespace Flashcards
             Console.WriteLine($@"| Date | StackName | Correct | Total | Score |");
             foreach (StudySession session in studysessions)
             {
-                Console.WriteLine($@"{session.Date}|{session.StackName}|{session.Correct}|{session.Total}|{session.Score}");
+                string showscore = session.Score.ToString("P0", System.Globalization.CultureInfo.InvariantCulture);
+                Console.WriteLine($@"{session.Date}|{session.StackName}|{session.Correct}|{session.Total}|{showscore}");
             }
+            Console.ReadKey();
             
         }
         internal static void ReportByYear()

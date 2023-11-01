@@ -98,7 +98,7 @@ namespace Flashcards
                     StackName VARCHAR(50),
                     Correct INT,
                     Total INT,
-                    Score 
+                    Score DECIMAL (5,2)
                     CONSTRAINT fk_study_stack_id
                         FOREIGN KEY (StackID)
                         REFERENCES Stacks (StackID)
@@ -505,17 +505,27 @@ namespace Flashcards
                 {
                     while (reader.Read())
                     {
-                        studySessions.Add(
-                            new StudySession
-                            {
-                                StudySessionID = reader.GetInt32(0),
-                                StackID = reader.GetInt32(1),
-                                Date = reader.GetFieldValue<DateOnly>(2),
-                                StackName = reader.GetString(3),
-                                Correct = reader.GetInt32(4),
-                                Total = reader.GetInt32(5),
-                                Score = reader.GetFieldValue<double>(6),
-                            });
+                        try
+                        {
+
+                            studySessions.Add(
+                                new StudySession
+                                {
+                                    StudySessionID = reader.GetInt32(0),
+                                    StackID = reader.GetInt32(1),
+                                    Date = reader.GetFieldValue<DateOnly>(2),
+                                    StackName = reader.GetString(3),
+                                    Correct = reader.GetInt32(4),
+                                    Total = reader.GetInt32(5),
+                                    Score = (double)reader.GetDecimal(6)
+                                });
+                        }
+                        catch (Exception exception)
+                        {
+                            Console.WriteLine("Error at LoadStudySession.");
+                            Console.WriteLine(exception.Message);
+                            Console.ReadLine();
+                        }
 
                     }
                 }
