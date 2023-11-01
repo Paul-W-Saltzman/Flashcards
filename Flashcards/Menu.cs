@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using static Flashcards.GlobalVariables;
@@ -238,7 +239,15 @@ namespace Flashcards
                 else 
                 {
                     List <DTO_StackAndCard> studySession = DTO_StackAndCard.LoadStackAndCardList(selectedStack);
-                    StudySession.Study(studySession);
+                    if (studySession.Count > 0)
+                    {
+                        StudySession.Study(studySession);
+                    }
+                    else
+                    {
+                        Console.WriteLine("This stack has no cards.  Please add some cards.");
+                        Console.ReadLine();
+                    }
                     //Action Page Flash Card Session
                 }
             }

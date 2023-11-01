@@ -98,7 +98,7 @@ namespace Flashcards
                     StackName VARCHAR(50),
                     Correct INT,
                     Total INT,
-                    Score DECIMAL(5,2)
+                    Score 
                     CONSTRAINT fk_study_stack_id
                         FOREIGN KEY (StackID)
                         REFERENCES Stacks (StackID)
@@ -568,13 +568,13 @@ namespace Flashcards
 
                 tableCmd.CommandText =
                     $@"WITH CTE AS (
-                    SELECT [StackID], [StackName], YEAR([Date]) AS [Year], MONTH([Date]) AS [Month], [Correct]
+                    SELECT [StudySessionID],[StackID], [StackName], YEAR([Date]) AS [Year], MONTH([Date]) AS [Month]
                     FROM [FlashCards].[dbo].[StudySessions]
                     )
                     SELECT *
                     FROM CTE
                     PIVOT (
-                    SUM([Correct])
+                    Count([StudySessionID])
                     FOR [Month] IN ([1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12])
                     ) AS PivotTable";
                 
