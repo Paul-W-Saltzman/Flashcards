@@ -85,7 +85,7 @@ namespace Flashcards
                     foreach (Stack stack in stacks)
                     {
 
-                        Console.WriteLine($@" {(option == index ? color : "    ")}  {stack.StackName}{resetColor}");
+                        Console.WriteLine($@"{(option == index ? color : "    ")}  {stack.StackName}{resetColor}");
                         index++;
                     }
                     index = 1;//reset index
@@ -114,9 +114,24 @@ namespace Flashcards
                 }
                 else
                 {
-                    Console.WriteLine($@"Option: {option}");
                     Stack selectedStack = stacks[option - 2];
-                    Console.WriteLine($"Item at index {option - 2}: {selectedStack.StackID} {selectedStack.StackName}");
+                    Console.Clear();
+                    List<Card> cards = Data.LoadCards(selectedStack.StackID);
+
+                    string stackLine = $"Selected Stack: {selectedStack.StackName}";
+                    string cardLine = $"Number of Cards: {cards.Count}";
+                    int stackLinePadNum = (50 - stackLine.Length) / 2;
+                    string stackLinePad = new string(' ', stackLinePadNum);
+                    int cardLinePadNum = (50 - cardLine.Length) / 2;
+                    string cardLinePad = new string(' ', cardLinePadNum);
+
+                    Console.WriteLine(" __________________________________________________ ");
+                    Console.WriteLine("|                                                  |");
+                    Console.WriteLine("|                                                  |");
+                    Console.WriteLine($"|{stackLinePad}{stackLine}{stackLinePad}|");
+                    Console.WriteLine($"|{cardLinePad}{cardLine}{cardLinePad}|");
+                    Console.WriteLine("|                                                  |");
+                    Console.WriteLine("|__________________________________________________|");
                     Console.ReadKey();
                     isSelected = false;
                 }
