@@ -26,8 +26,11 @@ namespace Flashcards
 
             while (!stackCreated)
             {
+                Console.Clear();
+                Console.CursorVisible = true;
                 Console.WriteLine("Please enter the name of the stack you wish to add");
                 string newStackName = Console.ReadLine();
+                Console.CursorVisible = false;
                 Helpers.Sanitize(newStackName);
                 if (newStackName.Length == 0)
                 {
