@@ -38,7 +38,7 @@ namespace Flashcards
 
         public static void Study(List<DTO_StackAndCard> study)
         {
-            DTO_StackAndCard stack = study[1];
+            DTO_StackAndCard stack = study[0];
             int stackID = stack.StackID;
             DateOnly date = DateOnly.FromDateTime(DateTime.Now);
             string stackName = stack.StackName;

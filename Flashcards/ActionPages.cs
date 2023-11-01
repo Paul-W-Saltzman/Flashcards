@@ -331,7 +331,7 @@ namespace Flashcards
                 {
                     stacks = Data.LoadStacks();
                     Menu.OpenMenu(pageText);
-                    Console.WriteLine($@"|{(option == index ? color : "    ")}BACK     {resetColor}   |");
+                    Console.WriteLine($@"{(option == index ? color : "    ")}BACK     {resetColor}   ");
                     index++;
 
                     foreach (Stack stack in stacks)
