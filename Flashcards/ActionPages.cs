@@ -155,13 +155,72 @@ namespace Flashcards
                 }
                 else
                 {
-                    Data.DeleteCard(selectedCard);
+                    DeleteCardConfirm(selectedCard);
                     Card.reNumberCardsInStack(selectedCard.StackID);
-                    Console.WriteLine($@"The Card {selectedCard.Front} Has been deleted. Press any key to continue.");
-                    Console.ReadKey();
                 }
             }
         }
+        internal static void DeleteCardConfirm(Card cardToDel)
+        {
+            Console.Clear();
+
+            ConsoleKeyInfo key;
+            int option = 1;
+            bool exitMenu = false;
+            bool isSelected = false;
+            string color = $"{checkMark}{green}   ";
+            string color2 = $"{checkMark}{red}   ";
+
+            int index = 1;
+
+
+            while (!exitMenu)
+            {
+                while (!isSelected)
+                {
+                    Console.Clear();
+
+                    (int left, int top) = Console.GetCursorPosition();
+                    Console.Clear();
+                    Console.SetCursorPosition(left, top);
+                    Console.WriteLine($@"Do you want to {red}delete{resetColor} the {red}{cardToDel.Front}{resetColor} Stack");
+                    Console.WriteLine();
+                    Console.WriteLine($@"{(option == 1 ? color : "    ")}Back     {resetColor}");
+                    Console.WriteLine($@"{(option == 2 ? color2 : "    ")}Delete   {resetColor}");
+
+                    key = Console.ReadKey(true);
+
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.DownArrow:
+                            option = (option == 2 ? 1 : option + 1);
+                            break;
+                        case ConsoleKey.UpArrow:
+                            option = (option == 1 ? 2 : option - 1);
+                            break;
+                        case ConsoleKey.Enter:
+                            isSelected = true;
+                            break;
+                    }
+                }
+                switch (option)
+                {
+                    case 1:
+                        exitMenu = true;
+                        break;
+                    case 2:
+                        Data.DeleteCard(cardToDel);
+                        Console.WriteLine();
+                        Console.WriteLine($@"Stack {red}{cardToDel.Front}{resetColor} has been deleted. Press any key to continue.");
+                        Console.ReadKey();
+                        exitMenu = true;
+                        break;
+                }
+            }
+
+        }
+
+
         internal static void ViewCards()
         {
             bool exitMenu = false;
@@ -336,6 +395,7 @@ namespace Flashcards
             bool exitMenu = false;
             bool isSelected = false;
             string color = $"{checkMark}{green}   ";
+            
 
 
             List<Stack> stacks = Data.LoadStacks();
