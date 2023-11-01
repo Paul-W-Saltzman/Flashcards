@@ -77,16 +77,15 @@ namespace Flashcards
                 {
                     Menu.OpenMenu(pageText);
 
-                    Console.WriteLine("==================");
-                    Console.WriteLine($@"|{(option == index ? color : "    ")}BACK     {resetColor}   |");
-                    Console.WriteLine("==================");
+                    Console.WriteLine($@"{(option == index ? color : "    ")}BACK     {resetColor}   ");
+
                     index++;
 
 
                     foreach (Stack stack in stacks)
                     {
 
-                        Console.WriteLine($@" {(option == index ? color : "    ")}{stack.StackName}{resetColor}");
+                        Console.WriteLine($@" {(option == index ? color : "    ")}  {stack.StackName}{resetColor}");
                         index++;
                     }
                     index = 1;//reset index
@@ -209,20 +208,20 @@ namespace Flashcards
                     //end of resets
                     Menu.OpenMenu(pageText);
                     index++;
-                    Console.WriteLine("==================");
-                    Console.WriteLine($@"|{(option == index ? color : "    ")}BACK     {resetColor}   |");
+     
+                    Console.WriteLine($@"{(option == index ? color : "    ")}BACK     {resetColor}   ");
                     if (option == index)
                     {
                         selectedStack = new Stack();//clears out selected stack if this option is selected 
                         selectedCard = new Card();//reset Selected Card
                     }
-                    Console.WriteLine("==================");
+
 
                     foreach (Stack stack in stacks)
                     {
                         controllStack = selectedStack;
                         index++;
-                        Console.WriteLine($@" {(option == index ? color : "    ")}{stack.StackName}{resetColor}");
+                        Console.WriteLine($@" {(option == index ? color : "    ")}  {stack.StackName}{resetColor}");
                         lastStack = stack;
                         if (option == index)
                         {
@@ -241,7 +240,7 @@ namespace Flashcards
                                 foreach (Card card in cards)
                                 {
                                     index++;
-                                    Console.WriteLine($@"       {(option == index ? color : "    ")}{card.Front}{resetColor}");
+                                    Console.WriteLine($@"       {(option == index ? color : "    ")}  {card.Front}{resetColor}");
                                     if (option == index)
                                     {
                                         selectedCard = card;
@@ -332,17 +331,13 @@ namespace Flashcards
                 {
                     stacks = Data.LoadStacks();
                     Menu.OpenMenu(pageText);
-
-                    Console.WriteLine("==================");
                     Console.WriteLine($@"|{(option == index ? color : "    ")}BACK     {resetColor}   |");
-                    Console.WriteLine("==================");
                     index++;
-
 
                     foreach (Stack stack in stacks)
                     {
 
-                        Console.WriteLine($@" {(option == index ? color : "    ")}{stack.StackName}{resetColor}");
+                        Console.WriteLine($@" {(option == index ? color : "    ")}  {stack.StackName}{resetColor}");
                         index++;
                     }
 
@@ -463,16 +458,15 @@ namespace Flashcards
                     stacks = Data.LoadStacks();
                     Menu.OpenMenu(pageText);
 
-                    Console.WriteLine("==================");
-                    Console.WriteLine($@"|{(option == index ? color : "    ")}BACK     {resetColor}   |");
-                    Console.WriteLine("==================");
+                    Console.WriteLine($@"{(option == index ? color : "    ")}BACK     {resetColor}   ");
+
                     index++;
 
 
                     foreach (Stack stack in stacks)
                     {
 
-                        Console.WriteLine($@" {(option == index ? color : "    ")}{stack.StackName}{resetColor}");
+                        Console.WriteLine($@" {(option == index ? color : "    ")}  {stack.StackName}{resetColor}");
                         index++;
                     }
                     index = 1;//reset index

@@ -32,10 +32,10 @@ namespace Flashcards
                     OpenMenu(pageText);
 
                     Console.WriteLine($@"{(option == 1 ? color : "    ")}EXIT    {resetColor}");
-                    Console.WriteLine($@"{(option == 2 ? color : "    ")}Manage Stacks{resetColor}");
-                    Console.WriteLine($@"{(option == 3 ? color : "    ")}Manage FlashCards{resetColor}");
-                    Console.WriteLine($@"{(option == 4 ? color : "    ")}Study {resetColor}");
-                    Console.WriteLine($@"{(option == 5 ? color : "    ")}Study Sessions Reporting {resetColor}");
+                    Console.WriteLine($@"{(option == 2 ? color : "    ")}  Manage Stacks{resetColor}");
+                    Console.WriteLine($@"{(option == 3 ? color : "    ")}  Manage FlashCards{resetColor}");
+                    Console.WriteLine($@"{(option == 4 ? color : "    ")}  Study {resetColor}");
+                    Console.WriteLine($@"{(option == 5 ? color : "    ")}  Study Sessions Reporting {resetColor}");
 
                     key = Console.ReadKey(true);
 
@@ -111,9 +111,9 @@ namespace Flashcards
                     OpenMenu(pageText);
 
                     Console.WriteLine($@"{(option == 1 ? color : "    ")}BACK{resetColor}");
-                    Console.WriteLine($@"{(option == 2 ? color : "    ")}View Stacks{resetColor}");
-                    Console.WriteLine($@"{(option == 3 ? color : "    ")}Add Stack{resetColor}");
-                    Console.WriteLine($@"{(option == 4 ? color : "    ")}Delete Stack{resetColor}");
+                    Console.WriteLine($@"{(option == 2 ? color : "    ")}  View Stacks{resetColor}");
+                    Console.WriteLine($@"{(option == 3 ? color : "    ")}  Add Stack{resetColor}");
+                    Console.WriteLine($@"{(option == 4 ? color : "    ")}  Delete Stack{resetColor}");
                    
                     key = Console.ReadKey(true);
 
@@ -178,9 +178,9 @@ namespace Flashcards
                     OpenMenu(pageText);
 
                     Console.WriteLine($@"{(option == 1 ? color : "    ")}BACK{resetColor}");
-                    Console.WriteLine($@"{(option == 2 ? color : "    ")}View Cards{resetColor}");
-                    Console.WriteLine($@"{(option == 3 ? color : "    ")}Add Card{resetColor}");
-                    Console.WriteLine($@"{(option == 4 ? color : "    ")}Delete Cards{resetColor}");
+                    Console.WriteLine($@"{(option == 2 ? color : "    ")}  View Cards{resetColor}");
+                    Console.WriteLine($@"{(option == 3 ? color : "    ")}  Add Card{resetColor}");
+                    Console.WriteLine($@"{(option == 4 ? color : "    ")}  Delete Cards{resetColor}");
 
                     key = Console.ReadKey(true);
 
@@ -271,8 +271,8 @@ namespace Flashcards
                     OpenMenu(pageText);
 
                     Console.WriteLine($@"{(option == 1 ? color : "    ")}BACK{resetColor}");
-                    Console.WriteLine($@"{(option == 2 ? color : "    ")}View Session{resetColor}");
-                    Console.WriteLine($@"{(option == 3 ? color : "    ")}By Month Year{resetColor}");
+                    Console.WriteLine($@"{(option == 2 ? color : "    ")}  View Session{resetColor}");
+                    Console.WriteLine($@"{(option == 3 ? color : "    ")}  By Month Year{resetColor}");
 
                     /// going to need to figure out this one as well
                     key = Console.ReadKey(true);
