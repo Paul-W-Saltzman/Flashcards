@@ -1,6 +1,8 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using ConsoleTableExt;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -53,6 +55,30 @@ namespace Flashcards
             string2 = Regex.Replace(string2, @"\s", "");
             if (string1 == string2) { match = true; }
             return match;
+        }
+        internal static void ShowTable(DataTable dataTable, String title)
+        {
+            
+            ConsoleTableBuilder
+            .From(dataTable)
+            .WithFormat(ConsoleTableBuilderFormat.Alternative)
+            .WithCharMapDefinition(
+                    CharMapDefinition.FramePipDefinition,
+                    new Dictionary<HeaderCharMapPositions, char> {
+                        {HeaderCharMapPositions.TopLeft, '╒' },
+                        {HeaderCharMapPositions.TopCenter, '╤' },
+                        {HeaderCharMapPositions.TopRight, '╕' },
+                        {HeaderCharMapPositions.BottomLeft, '╞' },
+                        {HeaderCharMapPositions.BottomCenter, '╪' },
+                        {HeaderCharMapPositions.BottomRight, '╡' },
+                        {HeaderCharMapPositions.BorderTop, '═' },
+                        {HeaderCharMapPositions.BorderRight, '│' },
+                        {HeaderCharMapPositions.BorderBottom, '═' },
+                        {HeaderCharMapPositions.BorderLeft, '│' },
+                        {HeaderCharMapPositions.Divider, '│' },
+                    })
+                .WithTitle(title, ConsoleColor.Green, ConsoleColor.Black, TextAligntment.Center)
+                .ExportAndWriteLine(TableAligntment.Center);
         }
 
         internal static void ViewCard(DTO_StackAndCard card, bool front)

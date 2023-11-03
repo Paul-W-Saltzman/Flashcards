@@ -681,8 +681,6 @@ namespace Flashcards
                 else
                 {
                 int year = years[option - 2];
-                Console.WriteLine($@"Selected Year:  {year}");
-                Console.ReadKey();
                 foreach( StudySessionReport report in studySessions ) 
                 {
                         if ( report.YEAR == year ) 

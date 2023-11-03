@@ -1,9 +1,6 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
+using System.Globalization;
+using System.Net.Http.Headers;
 
 namespace Flashcards
 {
@@ -29,12 +26,32 @@ namespace Flashcards
         internal static void ShowReport(List<StudySessionReport> studySessions)
         {
 
-                Console.WriteLine("|Stack  |  Year  |  JAN  |  FEB  |  MAR  |  APR  |  MAY  |  JUN  |  JUL  |  AUG  |  SEP  |  OCT  |  NOV  |  DEC  |");
+
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("Stack", typeof(string));
+            dataTable.Columns.Add("Year", typeof(int));
+            dataTable.Columns.Add("JAN", typeof(int));
+            dataTable.Columns.Add("FEB", typeof(int));
+            dataTable.Columns.Add("MAR", typeof(int));
+            dataTable.Columns.Add("APR", typeof(int));
+            dataTable.Columns.Add("MAY", typeof(int));
+            dataTable.Columns.Add("JUN", typeof(int));
+            dataTable.Columns.Add("JUL", typeof(int));
+            dataTable.Columns.Add("AUG", typeof(int));
+            dataTable.Columns.Add("SEP", typeof(int));
+            dataTable.Columns.Add("OCT", typeof(int));
+            dataTable.Columns.Add("NOV", typeof(int));
+            dataTable.Columns.Add("DEC", typeof(int));
+
             foreach (StudySessionReport report in studySessions) 
             {
-                Console.WriteLine($@"|{report.StackName}|{report.YEAR}|{report.January}|{report.February}|{report.March}|{report.April}|{report.May}|{report.June}|{report.July}|{report.August}|{report.September}|{report.October}|{report.November}|{report.December}|");
+                dataTable.Rows.Add(report.StackName,report.YEAR,report.January,report.February,report.March,report.April,report.May,report.June,report.July,report.August,report.September,report.October,report.November,report.December);
             }
+
+            Helpers.ShowTable(dataTable, "Coding Sessions for the Year");
             Console.ReadKey();
+
+
         }
     }
 }
