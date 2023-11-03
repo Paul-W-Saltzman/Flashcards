@@ -48,30 +48,34 @@ namespace Flashcards
             
             foreach (DTO_StackAndCard card in study)
             {
-                Console.WriteLine($@"No: {card.CardNumberInStack}");
-                Console.WriteLine($@"{card.CardFront}");
+                Console.Clear();
+                Helpers.ViewCard(card, true);
+                Console.WriteLine();
+                Console.Write("Awnser: ");
+                Console.CursorVisible = true;
                 string input = Console.ReadLine();
                 bool match = Helpers.CompareStrings(input, card.CardBack);
+                Console.CursorVisible = false;
                if (match == true)
                {
                     Console.WriteLine("Correct");
+                    Console.ReadKey();
                     correct++;
                 }
                else if(match == false)
                {
                     Console.WriteLine("Incorrect");
-                    Console.WriteLine($@"You entered{input}");
-                    Console.WriteLine($@"The correct awnser is {card.CardBack}");
+                    Console.WriteLine($@"You entered: {input}");
+                    Console.WriteLine("The Awnser is:");
+                    Helpers.ViewCard(card,false);
+                    Console.ReadKey();
                 }
 
 
             }
             StudySession thisStudySession = new StudySession(stackID,date,stackName,correct,total);
-            Console.WriteLine($@"This Study Session{thisStudySession.StudySessionID}");
-            Console.ReadLine();
-            //Display study session
+            Console.WriteLine($@"You got {correct} out of {total} correct.");
+            Console.ReadLine(); 
         }
     }
-
-  
 }

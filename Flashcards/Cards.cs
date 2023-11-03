@@ -18,7 +18,7 @@ namespace Flashcards
 
         internal Card() { }
 
-        internal Card(int stackID, string front, string back)
+        internal static Card NewCard(int stackID, string front, string back)
         {
             Card creatingCard = new Card();
             creatingCard.StackID = stackID;
@@ -26,6 +26,7 @@ namespace Flashcards
             creatingCard.Front = front;
             creatingCard.Back = back;
             creatingCard.CardID = Data.EnterCard(creatingCard.StackID, creatingCard.NoInStack, creatingCard.Front, creatingCard.Back);
+            return creatingCard;
         }
 
         internal static int NextNoInStack(int stackID)

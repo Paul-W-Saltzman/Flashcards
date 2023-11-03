@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -52,6 +53,114 @@ namespace Flashcards
             string2 = Regex.Replace(string2, @"\s", "");
             if (string1 == string2) { match = true; }
             return match;
+        }
+
+        internal static void ViewCard(DTO_StackAndCard card, bool front)
+        {
+            string cardText = "";
+            string cardSide = "";
+            if (front)
+            {
+                if (card.CardFront.IsNullOrEmpty()) { }
+                else
+                {
+                    cardText = card.CardFront;
+                    cardSide = "front";
+                }
+            }
+            else if (!front)
+            {
+                if (card.CardBack.IsNullOrEmpty()) { }
+                else
+                {
+                    cardText = card.CardBack;
+                    cardSide = "back";
+                }
+            }
+
+            String numberLine = $"{card.CardNumberInStack}";
+            int numberLineCount = 49 - numberLine.Length;
+            int textLineCount1 = (50 - cardText.Length) / 2;
+            int textLineCount2 = textLineCount1;
+            int sideLineCount1 = (50 - cardSide.Length) / 2;
+            int sideLineCount2 = sideLineCount1;
+            while (textLineCount1 + textLineCount2 + cardText.Length < 50)
+            {
+                textLineCount2++;
+            }
+            while (sideLineCount1 + sideLineCount2 + cardSide.Length < 50)
+            {
+                sideLineCount2++;
+            }
+            string numberLinePad = new string(' ', numberLineCount);
+            string textLinePad1 = new string(' ', textLineCount1);
+            string textLinePad2 = new string(' ', textLineCount2);
+            string sideLinePad1 = new string('_', sideLineCount1);
+            string sideLinePad2 = new string('_', sideLineCount2);
+
+
+            Console.WriteLine(" __________________________________________________ ");
+            Console.WriteLine($"| {numberLine}{numberLinePad}|");
+            Console.WriteLine("|                                                  |");
+            Console.WriteLine($"|{textLinePad1}{cardText}{textLinePad2}|");
+            Console.WriteLine("|                                                  |");
+            Console.WriteLine($"|{sideLinePad1}{cardSide}{sideLinePad2}|");
+
+
+
+        }
+
+        internal static void ViewCard(Card card, bool front)
+        {
+            string cardText = "";
+            string cardSide = "";
+            if (front)
+            {
+                if (card.Front.IsNullOrEmpty()) { }
+                else
+                {
+                    cardText = card.Front;
+                    cardSide = "front";
+                }
+            }
+            else if (!front)
+            {
+                if (card.Back.IsNullOrEmpty()) { }
+                else
+                {
+                    cardText = card.Back;
+                    cardSide = "back";
+                }
+            }
+
+            String numberLine = $"{card.NoInStack}";
+            int numberLineCount = 49 - numberLine.Length;
+            int textLineCount1 = (50 - cardText.Length) / 2;
+            int textLineCount2 = textLineCount1;
+            int sideLineCount1 = (50 - cardSide.Length) / 2;
+            int sideLineCount2 = sideLineCount1;
+            while (textLineCount1 + textLineCount2 + cardText.Length < 50)
+            {
+                textLineCount2++;
+            }
+            while (sideLineCount1 + sideLineCount2 + cardSide.Length < 50)
+            {
+                sideLineCount2++;
+            }
+            string numberLinePad = new string(' ', numberLineCount);
+            string textLinePad1 = new string(' ', textLineCount1);
+            string textLinePad2 = new string(' ', textLineCount2);
+            string sideLinePad1 = new string('_', sideLineCount1);
+            string sideLinePad2 = new string('_', sideLineCount2);
+
+
+            Console.WriteLine(" __________________________________________________ ");
+            Console.WriteLine($"| {numberLine}{numberLinePad}|");
+            Console.WriteLine("|                                                  |");
+            Console.WriteLine($"|{textLinePad1}{cardText}{textLinePad2}|");
+            Console.WriteLine("|                                                  |");
+            Console.WriteLine($"|{sideLinePad1}{cardSide}{sideLinePad2}|");
+
         }
     }
 }

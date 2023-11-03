@@ -226,7 +226,7 @@ namespace Flashcards
         internal static void StudyMenu()
         {
             bool exitMenu = false;
-            String pageText = "Please Choose the stack you want to study.";
+            String pageText = "Please choose the stack you want to study.";
 
             while (!exitMenu)
             {

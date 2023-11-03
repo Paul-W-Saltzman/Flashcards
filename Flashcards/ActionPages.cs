@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections;
@@ -239,59 +240,14 @@ namespace Flashcards
                     Console.Clear();
                     Console.WriteLine("Card Selected");
 
-                    ViewCard(selectedCard, true);
-                    ViewCard(selectedCard, false);
+                    Helpers.ViewCard(selectedCard, true);
+                    Helpers.ViewCard(selectedCard, false);
                     Console.ReadKey();
                 }
             }
         }
 
-        internal static void ViewCard(Card card, bool front)
-        {
-            string cardText = "";
-            string cardSide = "";
-            if (front)
-            {
-                cardText = card.Front;
-                cardSide = "front";
-            }
-            else if(!front)
-            {
-                cardText = card.Back;
-                cardSide = "back";
-            }
-
-            String numberLine = $"{card.NoInStack}";
-            int numberLineCount = 49 - numberLine.Length;
-            int textLineCount1 = (50 - cardText.Length)/2;
-            int textLineCount2 = textLineCount1;
-            int sideLineCount1 = (50-cardSide.Length)/2;
-            int sideLineCount2 = sideLineCount1;
-            while (textLineCount1 + textLineCount2 + cardText.Length < 50)
-            {
-                textLineCount2++;
-            }
-            while (sideLineCount1 + sideLineCount2 + cardSide.Length < 50)
-            {
-                sideLineCount2++;
-            }
-            string numberLinePad = new string(' ', numberLineCount);
-            string textLinePad1 = new string(' ', textLineCount1);
-            string textLinePad2 = new string(' ', textLineCount2);
-            string sideLinePad1 = new string('_', sideLineCount1);
-            string sideLinePad2 = new string('_', sideLineCount2);
-
-
-            Console.WriteLine(" __________________________________________________ ");
-            Console.WriteLine($"| {numberLine}{numberLinePad}|");
-            Console.WriteLine("|                                                  |");
-            Console.WriteLine($"|{textLinePad1}{cardText}{textLinePad2}|");
-            Console.WriteLine("|                                                  |");
-            Console.WriteLine($"|{sideLinePad1}{cardSide}{sideLinePad2}|");
-
-
-
-        }
+        
         internal static Card SelectCard()
         {
             //this menu was hard so I've got more comments here for myself 
@@ -630,17 +586,20 @@ namespace Flashcards
 
             String pageText = $@"Please select which stack you would like to {green}Add{resetColor} a {green}Flash Card{resetColor} to.";
             Stack selectedStack = ChooseStack(pageText);
-            Console.WriteLine($@"You Choose Stack {selectedStack.StackName}");
-            Console.ReadKey();
             Console.Clear();
             Console.WriteLine($@"Please enter the Front of the FlashCard.");
+            Console.CursorVisible = true;
             string front = Console.ReadLine();
             Console.Clear();
             Console.WriteLine($@"Please enter the Back of the FlashCard.");
             string back = Console.ReadLine();
+            Console.CursorVisible = false;
             front = Helpers.Sanitize(front);
             back = Helpers.Sanitize(back);
-            Card newCard = new Card(selectedStack.StackID,front,back);
+            Card newCard = Card.NewCard(selectedStack.StackID,front,back);
+            Helpers.ViewCard(newCard, true);
+            Helpers.ViewCard(newCard, false);
+            Console.ReadKey();
         }
 
         internal static void ViewStudySessions()
