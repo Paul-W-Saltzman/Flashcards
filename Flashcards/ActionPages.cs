@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -607,12 +608,21 @@ namespace Flashcards
             string pageText = "Choose the stack to view the Study Sessions for that stack.";
             Stack stack = ChooseStack(pageText);
             List<StudySession> studysessions = Data.LoadStudySessions(stack);
-            Console.WriteLine($@"| Date | StackName | Correct | Total | Score |");
+
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("DATE", typeof(DateOnly));
+            dataTable.Columns.Add("STACK NAME", typeof(string));
+            dataTable.Columns.Add("CORRECT", typeof(int));
+            dataTable.Columns.Add("TOTAL", typeof(int));
+            dataTable.Columns.Add("Score", typeof(String));   
             foreach (StudySession session in studysessions)
             {
                 string showscore = session.Score.ToString("P0", System.Globalization.CultureInfo.InvariantCulture);
-                Console.WriteLine($@"{session.Date}|{session.StackName}|{session.Correct}|{session.Total}|{showscore}");
+                dataTable.Rows.Add(session.Date,session.StackName,session.Correct,session.Total,showscore);
             }
+
+
+            Helpers.ShowTable(dataTable, stack.StackName);
             Console.ReadKey();
             
         }
