@@ -7,6 +7,7 @@ using static System.Collections.Specialized.BitVector32;
 using System.Diagnostics;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Reflection.PortableExecutable;
+using System.Net.WebSockets;
 
 namespace Flashcards
 {
@@ -77,6 +78,7 @@ namespace Flashcards
             CreateStacksTable();
             CreateCardsTable();
             CreateSudySessionsTable();
+            CreateVersionTable();
 
         }
 
@@ -186,6 +188,125 @@ namespace Flashcards
                 connection.Close();
             }
 
+        }
+        private static void CreateVersionTable()
+        {
+            using(SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+
+                tableCmd.CommandText =
+                    @"Use FlashCards;
+                    IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Version'
+                    BEGIN
+                    CREATE TABLE dbo.Version(
+                    VersionID  INT IDENTITY(1,1) PRIMARY KEY,
+                    Version INT;
+                    END";
+                try
+                {
+                    int rowsAffected = tableCmd.ExecuteNonQuery();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("Version Table Create");
+                    Console.WriteLine(exception);
+                    Console.ReadLine();
+                }
+
+                connection.Close();
+            }
+        }
+        private static void GetVersion()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+                SqlDataReader reader = null;
+                try 
+                { 
+                tableCmd.CommandText =
+                    @"Use FlashCards;
+                    SELECT Version FROM Version WHERE VersionID = 1; 
+                    END";
+
+                    reader = tableCmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            new Settings
+                                {
+                                    VersionID = reader.GetInt32(0),
+                                    Version = reader.GetInt32(1)
+                                };
+                        }
+                    }
+                    else
+                    {
+                        EnterVersion(0);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("Error at LoadStacks.");
+                    Console.WriteLine(exception.Message);
+                    Console.ReadLine();
+                }
+                finally
+                {
+                    reader?.Close();
+                    connection.Close();
+                }
+
+
+
+            }
+
+        }
+        private static void EnterVersion(int version)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+
+                tableCmd.CommandText = "INSERT INTO FlashCards.dbo.Version (Version) VALUES (@Version); SELECT SCOPE_IDENTITY();";
+                tableCmd.Parameters.Add(new SqlParameter("@Version", SqlDbType.VarChar) { Value = version });
+
+                try
+                {
+                    int rowsAffected = tableCmd.ExecuteNonQuery();
+
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("Error at Enter Version 0");
+                    Console.WriteLine(exception);
+                    Console.ReadLine();
+                }
+                connection.Close();
+
+            }
+        }
+
+        private static void LoadSeedData () 
+        {
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+
+                T
+                tableCmd.CommandText = 
+                    @"Use FlashCards;
+                    Select *
+                    "
+            }
+            
         }
 
         private static bool CheckIfDatabaseExists(SqlConnection connection, string databaseName)
