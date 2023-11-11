@@ -60,5 +60,10 @@ namespace Flashcards
 
         }
 
+        internal static void LoadSeedDataCards()
+        {
+
+        }
+
     }
 }

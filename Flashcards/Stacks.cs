@@ -18,6 +18,19 @@ namespace Flashcards
             StackName = stackName;
             StackID = Data.EnterStack(StackName);
         }
-        
+
+        internal static void LoadSeedDataStacks()
+        {
+            Stack variableTypes = new Stack("Variable Types");
+            Stack selectorCodes = new Stack("Selector Codes");
+            Stack returnCodes = new Stack("Return Codes");
+            Stack programingTermss = new Stack("Programing Terms");
+            Stack french = new Stack("french");
+            Stack vietnamese = new Stack("Vietnamese");
+            Stack Spanish = new Stack("Spanish");
+
+        }
+
+
     }
 }

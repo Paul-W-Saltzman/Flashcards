@@ -83,7 +83,7 @@ namespace Flashcards
             setting =  GetSettings();
             if (setting.Version < 2)
             {
-                //load Seed data
+                Stack.LoadSeedDataStacks();
             }
         }
 
@@ -289,7 +289,7 @@ namespace Flashcards
                 }
                 catch (Exception exception)
                 {
-                    Console.WriteLine("Error at Enter Version 0");
+                    Console.WriteLine($@"Error at Enter Version: {version}");
                     Console.WriteLine(exception);
                     Console.ReadLine();
                 }
@@ -297,23 +297,6 @@ namespace Flashcards
 
             }
         }
-
-        //private static void LoadSeedData () 
-        //{
-
-        //    using (SqlConnection connection = new SqlConnection(connectionString))
-        //    {
-        //        connection.Open();
-        //        var tableCmd = connection.CreateCommand();
-
-        //        T
-        //        tableCmd.CommandText = 
-        //            @"Use FlashCards;
-        //            Select *
-        //            "
-        //    }
-            
-        //}
 
         private static bool CheckIfDatabaseExists(SqlConnection connection, string databaseName)
         {
