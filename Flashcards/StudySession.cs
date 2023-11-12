@@ -35,6 +35,26 @@ namespace Flashcards
             this.StudySessionID = Data.EnterStudySession(this);
         }
 
+        //internal static void LoadSeedDataStudySessions()
+        //{
+        //    StudySession(1)
+        //    StudySession(1)
+        //    StudySession(1)
+        //    StudySession(2)
+        //    StudySession(2)
+        //    StudySession(2)
+        //    StudySession(3)
+        //    StudySession(3)
+        //    StudySession(3)
+        //    StudySession(4)
+        //    StudySession(4)
+        //    StudySession(4)
+        //    StudySession(5)
+        //    StudySession(5)
+        //    StudySession(5)
+
+        //}
+
 
         public static void Study(List<DTO_StackAndCard> study)
         {

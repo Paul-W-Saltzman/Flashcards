@@ -23,9 +23,7 @@ namespace Flashcards
         {
             Stack variableTypes = new Stack("Variable Types");
             Stack selectorCodes = new Stack("Selector Codes");
-            Stack returnCodes = new Stack("Return Codes");
-            Stack programingTermss = new Stack("Programing Terms");
-            Stack french = new Stack("french");
+            Stack french = new Stack("French");
             Stack vietnamese = new Stack("Vietnamese");
             Stack Spanish = new Stack("Spanish");
 

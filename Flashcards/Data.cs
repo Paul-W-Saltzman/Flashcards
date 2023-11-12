@@ -84,6 +84,9 @@ namespace Flashcards
             if (setting.Version < 2)
             {
                 Stack.LoadSeedDataStacks();
+                Card.LoadSeedDataCards();
+                //StudySession.LoadSeedDataStudySessions();
+                //EnterVersion(2);
             }
         }
 
@@ -293,7 +296,10 @@ namespace Flashcards
                     Console.WriteLine(exception);
                     Console.ReadLine();
                 }
-                connection.Close();
+                finally
+                {
+                    connection.Close();
+                }
 
             }
         }
@@ -407,7 +413,10 @@ namespace Flashcards
                     Console.WriteLine(exception);
                     Console.ReadLine();
                 }
-                connection.Close();
+                finally
+                {
+                    connection.Close();
+                }
             }
             return cardID;
         }
@@ -438,7 +447,10 @@ namespace Flashcards
                     Console.WriteLine(exception);
                     Console.ReadLine();
                 }
-                connection.Close();
+                finally
+                {
+                    connection.Close();
+                }
             }
             return studySessionID;
         }
@@ -467,7 +479,10 @@ namespace Flashcards
                     Console.WriteLine(exception);
                     Console.ReadLine();
                 }
-                connection.Close();
+                finally
+                {
+                    connection.Close();
+                }
             }
 
         }
@@ -493,7 +508,10 @@ namespace Flashcards
                     Console.WriteLine(exception);
                     Console.ReadLine();
                 }
-                connection.Close();
+                finally
+                {
+                    connection.Close();
+                }
             }
         }
 
@@ -636,6 +654,11 @@ namespace Flashcards
                             Console.WriteLine(exception.Message);
                             Console.ReadLine();
                         }
+                        finally
+                        {
+                            reader?.Close();
+                            connection.Close();
+                        }
 
                     }
                 }
@@ -643,10 +666,8 @@ namespace Flashcards
                 {
                     Console.WriteLine("No Rows Found");
                     Console.ReadKey();
-                }
-                connection.Close();
+                }              
             }
-
             return studySessions;
         }
 
@@ -672,7 +693,10 @@ namespace Flashcards
                     Console.WriteLine(exception);
                     Console.ReadLine();
                 }
-                connection.Close();
+                finally
+                {
+                    connection.Close();
+                }
             }
         }
 
@@ -729,6 +753,7 @@ namespace Flashcards
                     Console.WriteLine("No rows found");
                     Console.ReadKey();
                 }
+                connection.Close();
             }
             return reports;
         }

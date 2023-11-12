@@ -15,7 +15,6 @@ namespace Flashcards
         internal int NoInStack { get; set; }
         internal string? Front { get; set; }
         internal string? Back { get; set; }
-
         internal Card() { }
 
         internal static Card NewCard(int stackID, string front, string back)
@@ -33,13 +32,13 @@ namespace Flashcards
         {
             int noInStack = 0;
             List<Card> cards = Data.LoadCards(stackID);
-            if(cards.Count == 0) 
+            if (cards.Count == 0)
             {
                 noInStack = 1;
             }
-            else if(cards.Count > 0) 
+            else if (cards.Count > 0)
             {
-                noInStack = cards.Count + 1;            
+                noInStack = cards.Count + 1;
             }
             return noInStack;
         }
@@ -62,8 +61,23 @@ namespace Flashcards
 
         internal static void LoadSeedDataCards()
         {
+            NewCard(1, "string", "sequence of characters used to represent text");
+            NewCard(1, "int", "number");
+            NewCard(1, "bool", "true/false");
+            NewCard(1, "double", "double precision 64 bit");
+            NewCard(2, "CCD", "Cash Concentration or Disbursement - Commercial");
+            NewCard(2, "WEB", "Internet Initiated Transaction - Commercial/Retail");
+            NewCard(2, "PPD", "Prearranged Payment and Deposit - Retail");
+            NewCard(3, "Bonjour", "Hello");
+            NewCard(3, "Salut", "Bye");
+            NewCard(3, "Oui", "Yes");
+            NewCard(4, "Chao", "Hello");
+            NewCard(4, "Tam biet", "Bye");
+            NewCard(4, "Co", "Yes");
+            NewCard(5, "Hola", "Hello");
+            NewCard(5, "adios", "Bye");
+            NewCard(5, "Si", "Yes");
 
         }
-
     }
 }
