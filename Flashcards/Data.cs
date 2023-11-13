@@ -128,42 +128,7 @@ namespace Flashcards
                     Console.WriteLine(exception);
                     Console.ReadLine();
                 }
-                finally { connection.Close(); }--
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    .-*-*02*-*
-
+                finally { connection.Close(); }
             }
 
         }
@@ -690,13 +655,10 @@ namespace Flashcards
                             Console.WriteLine(exception.Message);
                             Console.ReadLine();
                         }
-                        finally
-                        {
-                            reader?.Close();
-                            connection.Close();
-                        }
 
                     }
+                    reader?.Close();
+                    connection.Close();
                 }
                 else
                 {
