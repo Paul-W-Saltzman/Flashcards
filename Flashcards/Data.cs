@@ -660,6 +660,7 @@ namespace Flashcards
                     reader?.Close();
                     connection.Close();
                 }
+
                 else
                 {
                     Console.WriteLine("No Rows Found");
