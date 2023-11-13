@@ -28,7 +28,5 @@ namespace Flashcards
             Stack Spanish = new Stack("Spanish");
 
         }
-
-
     }
 }

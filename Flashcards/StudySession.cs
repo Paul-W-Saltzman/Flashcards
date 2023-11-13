@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,26 +36,24 @@ namespace Flashcards
             this.StudySessionID = Data.EnterStudySession(this);
         }
 
-        //internal static void LoadSeedDataStudySessions()
-        //{
-        //    StudySession(1)
-        //    StudySession(1)
-        //    StudySession(1)
-        //    StudySession(2)
-        //    StudySession(2)
-        //    StudySession(2)
-        //    StudySession(3)
-        //    StudySession(3)
-        //    StudySession(3)
-        //    StudySession(4)
-        //    StudySession(4)
-        //    StudySession(4)
-        //    StudySession(5)
-        //    StudySession(5)
-        //    StudySession(5)
-
-        //}
-
+        internal static void LoadSeedDataStudySessions()
+        {
+            StudySession studysession = new StudySession(1, new DateOnly(2021, 11, 1), "EnvironmentVariableTarget Types", 4, 2);
+            StudySession studysession1 = new StudySession(1, new DateOnly(2022, 10, 20), "EnvironmentVariableTarget Types", 4, 2); 
+            StudySession studysession3 = new StudySession(1, new DateOnly(2023, 9, 21), "EnvironmentVariableTarget Types", 4, 2); 
+            StudySession studysession4 = new StudySession(2, new DateOnly(2021, 8, 2), "EnvironmentVariableTarget Types", 4, 2); 
+            StudySession studysession5 = new StudySession(2, new DateOnly(2022, 7, 3), "EnvironmentVariableTarget Types", 4, 2); 
+            StudySession studysession6 = new StudySession(2, new DateOnly(2023, 6, 4), "EnvironmentVariableTarget Types", 4, 2); 
+            StudySession studysession7 = new StudySession(3, new DateOnly(2020, 5, 10), "EnvironmentVariableTarget Types", 4, 2); 
+            StudySession studysession8 = new StudySession(3, new DateOnly(2022, 4, 12), "EnvironmentVariableTarget Types", 4, 2); 
+            StudySession studysession9 = new StudySession(3, new DateOnly(2023, 3, 13), "EnvironmentVariableTarget Types", 4, 2); 
+            StudySession studysession10 = new StudySession(4, new DateOnly(2020, 2, 15), "EnvironmentVariableTarget Types", 4, 2); 
+            StudySession studysession11 = new StudySession(4, new DateOnly(2021, 1, 20), "EnvironmentVariableTarget Types", 4, 2); 
+            StudySession studysession12 = new StudySession(4, new DateOnly(2022, 12, 21), "EnvironmentVariableTarget Types", 4, 2); 
+            StudySession studysession13 = new StudySession(5, new DateOnly(2020, 11, 22), "EnvironmentVariableTarget Types", 4, 2); 
+            StudySession studysession14 = new StudySession(5, new DateOnly(2021, 10, 25), "EnvironmentVariableTarget Types", 4, 2);
+            StudySession studysession15 = new StudySession(5, new DateOnly(2023, 9, 30), "EnvironmentVariableTarget Types", 4, 2);
+        }
 
         public static void Study(List<DTO_StackAndCard> study)
         {

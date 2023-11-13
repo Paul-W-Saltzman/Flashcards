@@ -15,6 +15,7 @@ namespace Flashcards
     {
         private static readonly string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
+   
         internal static void CheckCreateDatabase()
         {
             string databaseName = "FlashCards";
@@ -24,7 +25,9 @@ namespace Flashcards
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    connection.Open();
                     databaseExists = CheckIfDatabaseExists(connection, databaseName);
+                    connection.Close();
                 }
             }
             catch (Exception ex)
@@ -85,8 +88,8 @@ namespace Flashcards
             {
                 Stack.LoadSeedDataStacks();
                 Card.LoadSeedDataCards();
-                //StudySession.LoadSeedDataStudySessions();
-                //EnterVersion(2);
+                StudySession.LoadSeedDataStudySessions();
+                EnterVersion(2);
             }
         }
 
@@ -125,7 +128,41 @@ namespace Flashcards
                     Console.WriteLine(exception);
                     Console.ReadLine();
                 }
-                connection.Close();
+                finally { connection.Close(); }--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    .-*-*02*-*
 
             }
 
@@ -163,7 +200,7 @@ namespace Flashcards
                     Console.WriteLine(exception);
                     Console.ReadLine();
                 }
-                connection.Close();
+                finally { connection.Close(); }
             }
         }
 
@@ -193,7 +230,7 @@ namespace Flashcards
                     Console.WriteLine(exception);
                     Console.ReadLine();
                 }
-                connection.Close();
+                finally { connection.Close(); }
             }
 
         }
@@ -222,8 +259,7 @@ namespace Flashcards
                     Console.WriteLine(exception);
                     Console.ReadLine();
                 }
-
-                connection.Close();
+                finally { connection.Close(); }
             }
         }
         private static Settings GetSettings()
