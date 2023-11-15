@@ -89,7 +89,7 @@ namespace Flashcards
                 Stack.LoadSeedDataStacks();
                 Card.LoadSeedDataCards();
                 StudySession.LoadSeedDataStudySessions();
-                EnterVersion(2);
+                UpdateVersion(2);
             }
         }
 
@@ -284,6 +284,35 @@ namespace Flashcards
                 var tableCmd = connection.CreateCommand();
 
                 tableCmd.CommandText = "INSERT INTO FlashCards.dbo.Version (Version) VALUES (@Version); SELECT SCOPE_IDENTITY();";
+                tableCmd.Parameters.Add(new SqlParameter("@Version", SqlDbType.VarChar) { Value = version });
+
+                try
+                {
+                    int rowsAffected = tableCmd.ExecuteNonQuery();
+
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine($@"Error at Enter Version: {version}");
+                    Console.WriteLine(exception);
+                    Console.ReadLine();
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+            }
+        }
+
+        private static void UpdateVersion(int version)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+
+                tableCmd.CommandText = "UPDATE FlashCards.dbo.Version (Version) = (@Version) WHERE SessionID = 1; SELECT SCOPE_IDENTITY();";
                 tableCmd.Parameters.Add(new SqlParameter("@Version", SqlDbType.VarChar) { Value = version });
 
                 try
