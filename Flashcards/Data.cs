@@ -312,7 +312,7 @@ namespace Flashcards
                 connection.Open();
                 var tableCmd = connection.CreateCommand();
 
-                tableCmd.CommandText = "UPDATE FlashCards.dbo.Version (Version) = (@Version) WHERE SessionID = 1; SELECT SCOPE_IDENTITY();";
+                tableCmd.CommandText = "UPDATE FlashCards.dbo.Version SET Version = (@Version) WHERE VersionID = 1; SELECT SCOPE_IDENTITY();";
                 tableCmd.Parameters.Add(new SqlParameter("@Version", SqlDbType.VarChar) { Value = version });
 
                 try
@@ -322,7 +322,7 @@ namespace Flashcards
                 }
                 catch (Exception exception)
                 {
-                    Console.WriteLine($@"Error at Enter Version: {version}");
+                    Console.WriteLine($@"Error at Update Version: {version}");
                     Console.WriteLine(exception);
                     Console.ReadLine();
                 }
@@ -352,6 +352,7 @@ namespace Flashcards
             catch (Exception ex)
             {
                 // Handle exceptions (e.g., log the error)
+                Console.WriteLine("Error at Check if Database Exists");
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
             finally
