@@ -642,6 +642,7 @@ namespace Flashcards
         {
             List<StudySessionReport> studySessions = Data.GetReports();
             List<StudySessionReport> studySessionByYear = new List<StudySessionReport>();
+            studySessionByYear.Clear();
 
 
 
@@ -665,6 +666,7 @@ namespace Flashcards
             {
                 while (!isSelected)
                 {
+                    studySessionByYear.Clear();
                     Menu.OpenMenu(pageText);
 
                     Console.WriteLine();
