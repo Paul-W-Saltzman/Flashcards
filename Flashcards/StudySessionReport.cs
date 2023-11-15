@@ -1,6 +1,4 @@
 ﻿using System.Data;
-using System.Globalization;
-using System.Net.Http.Headers;
 
 namespace Flashcards
 {

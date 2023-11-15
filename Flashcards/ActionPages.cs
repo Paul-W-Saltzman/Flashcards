@@ -1,19 +1,6 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.FileIO;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
+
 using static Flashcards.GlobalVariables;
-using static System.Collections.Specialized.BitVector32;
 
 namespace Flashcards
 {

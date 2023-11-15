@@ -1,13 +1,7 @@
-﻿using System;
-using System.Data.SqlClient;
+﻿
 using Microsoft.Data.SqlClient;
-using System.IO;
 using System.Data;
-using static System.Collections.Specialized.BitVector32;
-using System.Diagnostics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Reflection.PortableExecutable;
-using System.Net.WebSockets;
+
 
 namespace Flashcards
 {
