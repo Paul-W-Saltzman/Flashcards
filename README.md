@@ -19,10 +19,13 @@
 - [x] Selectable menu press up down and enter to navigate.
 - [x] Crud Database options
 - [x] Seed data loaded at first start up
-- [ ] Manage Stacks View Create and Delete Stacks
-- [ ] Manage Cards View Create and Delete Cards
-- [ ] Study Sessions
-- [ ] Study Session Reporting to view the past study sessions.
+- [x] Manage Stacks View Create and Delete Stacks
+- [x] Manage Cards View Create and Delete Cards
+- [x] Study Sessions
+- [x] Study Session Reporting to view the past study sessions.
+
+# What I learned
+I spent quite a bit of time working through the connection to SSMS.  I also spent some time on pivot tables - this was new to me.  The menu took a bit of time.  The dynamic stack menu took more.   The expanding menu in cards took even longer.  I almost gave up on the last one, but I'm stuborn.
 
 # References
 https://www.youtube.com/watch?v=YyD1MRJY0qI
