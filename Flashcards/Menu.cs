@@ -1,12 +1,4 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using static Flashcards.GlobalVariables;
+﻿using static Flashcards.GlobalVariables;
 
 namespace Flashcards
 {
@@ -303,7 +295,7 @@ namespace Flashcards
                         break;
                     case 3://View Pivot Table
                         ActionPages.ReportByYear();
-                        isSelected = false;;
+                        isSelected = false;
                         break;
                 }
             }

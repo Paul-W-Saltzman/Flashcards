@@ -605,26 +605,38 @@ namespace Flashcards
 
         internal static void ViewStudySessions()
         {
+            bool exitMenu = false;
             string pageText = "Choose the stack to view the Study Sessions for that stack.";
-            Stack stack = ChooseStack(pageText);
-            List<StudySession> studysessions = Data.LoadStudySessions(stack);
 
-            DataTable dataTable = new DataTable();
-            dataTable.Columns.Add("DATE", typeof(DateOnly));
-            dataTable.Columns.Add("STACK NAME", typeof(string));
-            dataTable.Columns.Add("CORRECT", typeof(int));
-            dataTable.Columns.Add("TOTAL", typeof(int));
-            dataTable.Columns.Add("Score", typeof(String));   
-            foreach (StudySession session in studysessions)
+            while (!exitMenu)
             {
-                string showscore = session.Score.ToString("P0", System.Globalization.CultureInfo.InvariantCulture);
-                dataTable.Rows.Add(session.Date,session.StackName,session.Correct,session.Total,showscore);
+                Stack stack = ChooseStack(pageText);
+                if (stack.StackID == 0)
+                {
+                   exitMenu = true;
+                }
+                else
+                {
+                    List<StudySession> studysessions = Data.LoadStudySessions(stack);
+
+
+                    DataTable dataTable = new DataTable();
+                    dataTable.Columns.Add("DATE", typeof(DateOnly));
+                    dataTable.Columns.Add("STACK NAME", typeof(string));
+                    dataTable.Columns.Add("CORRECT", typeof(int));
+                    dataTable.Columns.Add("TOTAL", typeof(int));
+                    dataTable.Columns.Add("Score", typeof(String));
+                    foreach (StudySession session in studysessions)
+                    {
+                        string showscore = session.Score.ToString("P0", System.Globalization.CultureInfo.InvariantCulture);
+                        dataTable.Rows.Add(session.Date, session.StackName, session.Correct, session.Total, showscore);
+                    }
+
+
+                    Helpers.ShowTable(dataTable, stack.StackName);
+                    Console.ReadKey();
+                }
             }
-
-
-            Helpers.ShowTable(dataTable, stack.StackName);
-            Console.ReadKey();
-            
         }
         internal static void ReportByYear()
         {
