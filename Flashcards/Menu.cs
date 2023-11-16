@@ -230,7 +230,7 @@ namespace Flashcards
                 }
                 else 
                 {
-                    List <DTO_StackAndCard> studySession = DTO_StackAndCard.LoadStackAndCardList(selectedStack);
+                    List <DtoStackAndCard> studySession = DtoStackAndCard.LoadStackAndCardList(selectedStack);
                     if (studySession.Count > 0)
                     {
                         StudySession.Study(studySession);

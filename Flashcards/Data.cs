@@ -243,10 +243,8 @@ namespace Flashcards
                         {
                             while (reader.Read())
                             {
-                                
                                 settings.VersionID = reader.GetInt32(0);
-                                settings.Version = reader.GetInt32(1);
-                                
+                                settings.Version = reader.GetInt32(1);  
                             }
                         }
                         else
@@ -725,7 +723,6 @@ namespace Flashcards
         internal static List<StudySessionReport> GetReports()
         {
             List<StudySessionReport> reports = new List<StudySessionReport>();
-            StudySessionReport report = new StudySessionReport();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
