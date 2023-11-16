@@ -77,7 +77,7 @@ namespace Flashcards
                 .ExportAndWriteLine(TableAligntment.Center);
         }
 
-        internal static void ViewCard(DTO_StackAndCard card, bool front)
+        internal static void ViewCard(DtoStackAndCard card, bool front)
         {
             string cardText = "";
             string cardSide = "";

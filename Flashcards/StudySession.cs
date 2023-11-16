@@ -46,9 +46,9 @@ namespace Flashcards
             StudySession studysession15 = new StudySession(5, new DateOnly(2023, 9, 30), "Spanish", 4, 2);
         }
 
-        public static void Study(List<DTO_StackAndCard> study)
+        public static void Study(List<DtoStackAndCard> study)
         {
-            DTO_StackAndCard stack = study[0];
+            DtoStackAndCard stack = study[0];
             int stackID = stack.StackID;
             DateOnly date = DateOnly.FromDateTime(DateTime.Now);
             string stackName = stack.StackName;
@@ -56,7 +56,7 @@ namespace Flashcards
             int total = study.Count;
 
             
-            foreach (DTO_StackAndCard card in study)
+            foreach (DtoStackAndCard card in study)
             {
                 Console.Clear();
                 Helpers.ViewCard(card, true);
