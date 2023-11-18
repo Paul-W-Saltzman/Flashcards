@@ -233,7 +233,7 @@ namespace Flashcards
                     List <DtoStackAndCard> studySession = DtoStackAndCard.LoadStackAndCardList(selectedStack);
                     if (studySession.Count > 0)
                     {
-                        StudySession.Study(studySession);
+                        StudySession.StudyStack(studySession);
                     }
                     else
                     {

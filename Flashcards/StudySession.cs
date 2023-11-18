@@ -46,7 +46,7 @@ namespace Flashcards
             new StudySession(5, new DateOnly(2023, 9, 30), "Spanish", 4, 2);
         }
 
-        public static void Study(List<DtoStackAndCard> study)
+        public static void StudyStack(List<DtoStackAndCard> study)
         {
             DtoStackAndCard stack = study[0];
             int stackID = stack.StackID;
@@ -80,10 +80,8 @@ namespace Flashcards
                     Helpers.ViewCard(card,false);
                     Console.ReadKey();
                 }
-
-
             }
-            StudySession thisStudySession = new StudySession(stackID,date,stackName,correct,total);
+            new StudySession(stackID,date,stackName,correct,total);
             Console.WriteLine($@"You got {correct} out of {total} correct.");
             Console.ReadLine(); 
         }
